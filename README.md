@@ -1,3 +1,5 @@
+https://lu5h0cr.github.io/nca-6.10-simulator/
+
 # NCA 6.10 Question Bank Update
 
 This update fixes the issue where the correct answer appeared in option A every time.
