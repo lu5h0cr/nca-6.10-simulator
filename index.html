@@ -443,26 +443,27 @@
 <body>
   <div class="shell">
     <nav class="topnav">
-      <button class="tab-btn active" data-view="summaryView">Resumen por objetivos</button>
-      <button class="tab-btn" data-view="studyView">Study Hub</button>
-      <button class="tab-btn" data-view="flashView">Flashcards</button>
-      <button class="tab-btn" data-view="practiceView">Simulador</button>
+      <button class="tab-btn active" data-view="summaryView" id="navSummary">Resumen por objetivos</button>
+      <button class="tab-btn" data-view="studyView" id="navStudy">Study Hub</button>
+      <button class="tab-btn" data-view="flashView" id="navFlash">Flashcards</button>
+      <button class="tab-btn" data-view="practiceView" id="navSimulator">Simulador</button>
+      <button class="tab-btn" id="langToggle" type="button">English</button>
       <a class="btn" id="pdfGuideBtn" href="./docs/Guia_Estudio_NCA_610_Manual_PRO.pdf" target="_blank">Abrir guía PDF completa</a>
     </nav>
 
     <header class="hero">
       <div class="hero-main card">
         <div class="eyebrow">Nutanix Certified Associate</div>
-        <h1>NCA 6.10 Resumen, Study Hub y Simulador</h1>
-        <p class="subtitle">
+        <h1 id="heroTitle">NCA 6.10 Resumen, Study Hub y Simulador</h1>
+        <p class="subtitle" id="heroSubtitle">
           Estudiá los objetivos del examen con un resumen enfocado, repasá conceptos clave y practicá con el banco completo o solo con las 99 preguntas fuente/oficiales que subiste.
         </p>
         <div class="hero-actions">
-          <button class="primary" onclick="showView('summaryView')">Ver resumen por objetivos</button>
-          <button onclick="showView('flashView')">Repasar tarjetas</button>
-          <button onclick="startSimulatorFromHero()">Iniciar simulador</button>
+          <button class="primary" id="heroSummaryBtn" onclick="showView('summaryView')">Ver resumen por objetivos</button>
+          <button id="heroFlashBtn" onclick="showView('flashView')">${escapeHtml(t("reviewCards"))}</button>
+          <button id="heroSimBtn" onclick="startSimulatorFromHero()">Iniciar simulador</button>
         </div>
-        <div class="notice">
+        <div class="notice" id="flowNotice">
           Flujo recomendado: Resumen por objetivos → Flashcards → Simulador 99 preguntas → Revisar errores → Simulador completo.
         </div>
       </div>
@@ -470,19 +471,19 @@
       <aside class="stats card">
         <div class="stat">
           <div class="num" id="totalQuestions">0</div>
-          <div class="label">Preguntas cargadas</div>
+          <div class="label" id="questionsLoadedLabel">Preguntas cargadas</div>
         </div>
         <div class="stat">
           <div class="num" id="sourceQuestions">0</div>
-          <div class="label">Preguntas fuente/oficiales detectadas</div>
+          <div class="label" id="sourceQuestionsLabel">Preguntas fuente/oficiales detectadas</div>
         </div>
         <div class="stat">
           <div class="num" id="currentScore">0%</div>
-          <div class="label">Puntaje actual</div>
+          <div class="label" id="currentScoreLabel">Puntaje actual</div>
         </div>
         <div class="stat">
           <div class="num" id="answeredCount">0</div>
-          <div class="label">Respondidas</div>
+          <div class="label" id="answeredLabel">Respondidas</div>
         </div>
       </aside>
     </header>
@@ -508,10 +509,10 @@
     <section class="view" id="practiceView">
       <main class="layout">
         <aside class="sidebar card">
-          <h2 class="section-title">Configuración de práctica</h2>
+          <h2 class="section-title" id="practiceSettingsTitle">Configuración de práctica</h2>
 
           <div class="field">
-            <label for="questionSetSelect">Banco de preguntas</label>
+            <label for="questionSetSelect" id="questionSetLabel">Banco de preguntas</label>
             <select id="questionSetSelect">
               <option value="full">Banco completo</option>
               <option value="source99">Solo 99 preguntas fuente/oficiales</option>
@@ -520,7 +521,7 @@
           </div>
 
           <div class="field">
-            <label for="modeSelect">Modo</label>
+            <label for="modeSelect" id="modeLabel">Modo</label>
             <select id="modeSelect">
               <option value="study">Study Mode - mostrar explicación después de responder</option>
               <option value="exam">Exam Mode - explicación al final</option>
@@ -528,21 +529,21 @@
           </div>
 
           <div class="field">
-            <label for="objectiveSelect">Objetivo</label>
+            <label for="objectiveSelect" id="objectiveLabel">Objetivo</label>
             <select id="objectiveSelect">
               <option value="all">Todos los objetivos</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="topicSelect">Tema</label>
+            <label for="topicSelect" id="topicLabel">Tema</label>
             <select id="topicSelect">
               <option value="all">Todos los temas</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="countSelect">Cantidad de preguntas</label>
+            <label for="countSelect" id="countLabel">Cantidad de preguntas</label>
             <select id="countSelect">
               <option value="10">10 preguntas</option>
               <option value="25">25 preguntas</option>
@@ -553,7 +554,7 @@
           </div>
 
           <div class="field">
-            <label for="shuffleSelect">Orden</label>
+            <label for="shuffleSelect" id="orderLabel">Orden</label>
             <select id="shuffleSelect">
               <option value="yes">Aleatorias</option>
               <option value="no">Orden original</option>
@@ -1059,6 +1060,194 @@
       ["Dark Site", "Sitio sin internet directo; requiere procesos offline/controlados para licencias y LCM bundles."]
     ];
 
+
+    const translations = {
+      es: {
+        langButton: "English",
+        navSummary: "Resumen por objetivos",
+        navStudy: "Study Hub",
+        navFlash: "Flashcards",
+        navSimulator: "Simulador",
+        pdf: "Abrir guía PDF completa",
+        heroTitle: "NCA 6.10 Resumen, Study Hub y Simulador",
+        heroSubtitle: "Estudiá los objetivos del examen con un resumen enfocado, repasá conceptos clave y practicá con el banco completo o solo con las 99 preguntas fuente/oficiales que subiste.",
+        heroSummary: "Ver resumen por objetivos",
+        heroFlash: "Repasar tarjetas",
+        heroSim: "Iniciar simulador",
+        flow: "Flujo recomendado: Resumen por objetivos → Flashcards → Simulador 99 preguntas → Revisar errores → Simulador completo.",
+        questionsLoaded: "Preguntas cargadas",
+        sourceQuestions: "Preguntas fuente/oficiales detectadas",
+        currentScore: "Puntaje actual",
+        answered: "Respondidas",
+        practiceSettings: "Configuración de práctica",
+        questionSet: "Banco de preguntas",
+        mode: "Modo",
+        objective: "Objetivo",
+        topic: "Tema",
+        count: "Cantidad de preguntas",
+        order: "Orden",
+        newSession: "Nueva sesión",
+        reset: "Reiniciar",
+        qsetFull: "Banco completo",
+        qsetSource: "Solo 99 preguntas fuente/oficiales",
+        qsetNew: "Solo preguntas nuevas de práctica",
+        modeStudy: "Study Mode - mostrar explicación después de responder",
+        modeExam: "Exam Mode - explicación al final",
+        allObjectives: "Todos los objetivos",
+        allTopics: "Todos los temas",
+        count10: "10 preguntas",
+        count25: "25 preguntas",
+        count50: "50 preguntas",
+        count99: "99 preguntas",
+        countAll: "Todas las filtradas",
+        shuffle: "Aleatorias",
+        original: "Orden original",
+        readyTitle: "Listo para practicar",
+        readyText: "Elegí la configuración y presioná <strong>Nueva sesión</strong>.",
+        noQuestionsTitle: "No hay preguntas con ese filtro",
+        noQuestionsText: "Cambiá el banco, objetivo o tema seleccionado.",
+        checkAnswer: "Revisar respuesta",
+        next: "Siguiente",
+        previous: "Anterior",
+        completed: "Sesión completada",
+        answeredOf: "Respondiste {answered} de {total} preguntas.",
+        score: "Puntaje",
+        correct: "Correctas",
+        review: "Por repasar",
+        excellent: "Excelente.",
+        noIncorrect: "No hubo respuestas incorrectas en esta sesión.",
+        mustKnow: "Lo que debés dominar",
+        examTips: "Pistas de examen",
+        mistakes: "Errores comunes",
+        practiceObjective: "Practicar este objetivo",
+        reviewCards: "Repasar tarjetas",
+        practiceTopic: "Practicar este tema"
+      },
+      en: {
+        langButton: "Español",
+        navSummary: "Objective Summary",
+        navStudy: "Study Hub",
+        navFlash: "Flashcards",
+        navSimulator: "Simulator",
+        pdf: "Open Full PDF Guide",
+        heroTitle: "NCA 6.10 Summary, Study Hub & Simulator",
+        heroSubtitle: "Study the exam objectives with a focused summary, review key concepts, and practice with the full question bank or only the 99 source/official questions you provided.",
+        heroSummary: "Open Objective Summary",
+        heroFlash: "Review Flashcards",
+        heroSim: "Start Simulator",
+        flow: "Recommended flow: Objective Summary → Flashcards → 99-question simulator → Review mistakes → Full simulator.",
+        questionsLoaded: "Questions loaded",
+        sourceQuestions: "Source/official questions detected",
+        currentScore: "Current score",
+        answered: "Answered",
+        practiceSettings: "Practice Settings",
+        questionSet: "Question bank",
+        mode: "Mode",
+        objective: "Objective",
+        topic: "Topic",
+        count: "Number of questions",
+        order: "Order",
+        newSession: "New Session",
+        reset: "Reset",
+        qsetFull: "Full bank",
+        qsetSource: "Only 99 source/official questions",
+        qsetNew: "Only new practice questions",
+        modeStudy: "Study Mode - show explanation after answering",
+        modeExam: "Exam Mode - explanations at the end",
+        allObjectives: "All objectives",
+        allTopics: "All topics",
+        count10: "10 questions",
+        count25: "25 questions",
+        count50: "50 questions",
+        count99: "99 questions",
+        countAll: "All filtered questions",
+        shuffle: "Shuffle",
+        original: "Original order",
+        readyTitle: "Ready to practice",
+        readyText: "Choose your settings and press <strong>New Session</strong>.",
+        noQuestionsTitle: "No questions found with that filter",
+        noQuestionsText: "Change the question bank, objective, or topic selected.",
+        checkAnswer: "Check answer",
+        next: "Next",
+        previous: "Previous",
+        completed: "Session complete",
+        answeredOf: "You answered {answered} of {total} questions.",
+        score: "Score",
+        correct: "Correct",
+        review: "To review",
+        excellent: "Excellent.",
+        noIncorrect: "There were no incorrect answers in this session.",
+        mustKnow: "What you must master",
+        examTips: "Exam clues",
+        mistakes: "Common mistakes",
+        practiceObjective: "Practice this objective",
+        reviewCards: "Review flashcards",
+        practiceTopic: "Practice this topic"
+      }
+    };
+
+    let currentLang = "es";
+
+    function t(key) {
+      return translations[currentLang][key] || key;
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = currentLang;
+      document.getElementById("langToggle").textContent = t("langButton");
+      document.getElementById("navSummary").textContent = t("navSummary");
+      document.getElementById("navStudy").textContent = t("navStudy");
+      document.getElementById("navFlash").textContent = t("navFlash");
+      document.getElementById("navSimulator").textContent = t("navSimulator");
+      document.getElementById("pdfGuideBtn").textContent = t("pdf");
+      document.getElementById("heroTitle").textContent = t("heroTitle");
+      document.getElementById("heroSubtitle").textContent = t("heroSubtitle");
+      document.getElementById("heroSummaryBtn").textContent = t("heroSummary");
+      document.getElementById("heroFlashBtn").textContent = t("heroFlash");
+      document.getElementById("heroSimBtn").textContent = t("heroSim");
+      document.getElementById("flowNotice").textContent = t("flow");
+      document.getElementById("questionsLoadedLabel").textContent = t("questionsLoaded");
+      document.getElementById("sourceQuestionsLabel").textContent = t("sourceQuestions");
+      document.getElementById("currentScoreLabel").textContent = t("currentScore");
+      document.getElementById("answeredLabel").textContent = t("answered");
+      document.getElementById("practiceSettingsTitle").textContent = t("practiceSettings");
+      document.getElementById("questionSetLabel").textContent = t("questionSet");
+      document.getElementById("modeLabel").textContent = t("mode");
+      document.getElementById("objectiveLabel").textContent = t("objective");
+      document.getElementById("topicLabel").textContent = t("topic");
+      document.getElementById("countLabel").textContent = t("count");
+      document.getElementById("orderLabel").textContent = t("order");
+      document.getElementById("newSessionBtn").textContent = t("newSession");
+      document.getElementById("resetBtn").textContent = t("reset");
+
+      els.questionSetSelect.options[0].textContent = t("qsetFull");
+      els.questionSetSelect.options[1].textContent = t("qsetSource");
+      els.questionSetSelect.options[2].textContent = t("qsetNew");
+      els.modeSelect.options[0].textContent = t("modeStudy");
+      els.modeSelect.options[1].textContent = t("modeExam");
+      els.countSelect.options[0].textContent = t("count10");
+      els.countSelect.options[1].textContent = t("count25");
+      els.countSelect.options[2].textContent = t("count50");
+      els.countSelect.options[3].textContent = t("count99");
+      els.countSelect.options[4].textContent = t("countAll");
+      els.shuffleSelect.options[0].textContent = t("shuffle");
+      els.shuffleSelect.options[1].textContent = t("original");
+
+      hydrateFilters();
+      renderSummary(currentSummaryId);
+      renderStudyHub();
+      renderFlashcards(currentFlashcardIndex);
+      resetSession();
+    }
+
+    function toggleLanguage() {
+      currentLang = currentLang === "es" ? "en" : "es";
+      applyLanguage();
+    }
+
+    let currentSummaryId = "overview";
+    let currentFlashcardIndex = 0;
+
     const state = {
       bank: [],
       session: [],
@@ -1120,6 +1309,7 @@
 
     function renderSummary(id = "overview") {
       const item = summaryObjectives.find(x => x.id === id) || summaryObjectives[0];
+      currentSummaryId = item.id;
       renderSummaryMenu(item.id);
       els.summaryDetail.innerHTML = `
         <div class="pill-row">
@@ -1130,18 +1320,18 @@
         <h2>${escapeHtml(item.title)}</h2>
         ${item.explanation.map(p => `<p>${escapeHtml(p)}</p>`).join("")}
 
-        <h3>Lo que debés dominar</h3>
+        <h3>${escapeHtml(t("mustKnow"))}</h3>
         <ul>${item.mustKnow.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
 
-        <h3>Pistas de examen</h3>
+        <h3>${escapeHtml(t("examTips"))}</h3>
         <ul>${item.examTips.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
 
-        <h3>Errores comunes</h3>
+        <h3>${escapeHtml(t("mistakes"))}</h3>
         <ul>${item.commonMistakes.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
 
         <div class="hero-actions">
-          <button class="primary" onclick="practiceObjective('${escapeAttr(item.objective)}')">Practicar este objetivo</button>
-          <button onclick="showView('flashView')">Repasar tarjetas</button>
+          <button class="primary" onclick="practiceObjective('${escapeAttr(item.objective)}')">${escapeHtml(t("practiceObjective"))}</button>
+          <button id="heroFlashBtn" onclick="showView('flashView')">${escapeHtml(t("reviewCards"))}</button>
         </div>
       `;
     }
@@ -1156,13 +1346,14 @@
           <h2>${escapeHtml(title)}</h2>
           <p>${escapeHtml(text)}</p>
           <div class="hero-actions">
-            <button onclick="practiceTopic('${escapeAttr(topic)}')">Practicar este tema</button>
+            <button onclick="practiceTopic('${escapeAttr(topic)}')">${escapeHtml(t("practiceTopic"))}</button>
           </div>
         </article>
       `).join("");
     }
 
     function renderFlashcards(activeIndex = 0) {
+      currentFlashcardIndex = activeIndex;
       els.flashList.innerHTML = flashcards.map((card, index) => `
         <button class="${index === activeIndex ? "active" : ""}" onclick="renderFlashcards(${index})">
           ${index + 1}. ${escapeHtml(card[0])}
@@ -1175,8 +1366,8 @@
         <h2>${escapeHtml(card[0])}</h2>
         <p class="answer">${escapeHtml(card[1])}</p>
         <div class="hero-actions">
-          <button ${activeIndex === 0 ? "disabled" : ""} onclick="renderFlashcards(${Math.max(0, activeIndex - 1)})">Anterior</button>
-          <button class="primary" ${activeIndex === flashcards.length - 1 ? "disabled" : ""} onclick="renderFlashcards(${Math.min(flashcards.length - 1, activeIndex + 1)})">Siguiente</button>
+          <button ${activeIndex === 0 ? "disabled" : ""} onclick="renderFlashcards(${Math.max(0, activeIndex - 1)})">${escapeHtml(t("previous"))}</button>
+          <button class="primary" ${activeIndex === flashcards.length - 1 ? "disabled" : ""} onclick="renderFlashcards(${Math.min(flashcards.length - 1, activeIndex + 1)})">${escapeHtml(t("next"))}</button>
         </div>
       `;
     }
@@ -1242,10 +1433,10 @@
       const objectives = unique(state.bank.map(q => q.objective).filter(Boolean)).sort(naturalSort);
       const topics = unique(state.bank.map(q => q.topic).filter(Boolean)).sort(naturalSort);
 
-      els.objectiveSelect.innerHTML = `<option value="all">Todos los objetivos</option>` +
+      els.objectiveSelect.innerHTML = `<option value="all">${escapeHtml(t("allObjectives"))}</option>` +
         objectives.map(item => `<option value="${escapeAttr(item)}">Objective ${escapeHtml(item)}</option>`).join("");
 
-      els.topicSelect.innerHTML = `<option value="all">Todos los temas</option>` +
+      els.topicSelect.innerHTML = `<option value="all">${escapeHtml(t("allTopics"))}</option>` +
         topics.map(item => `<option value="${escapeAttr(item)}">${escapeHtml(item)}</option>`).join("");
     }
 
@@ -1292,8 +1483,8 @@
       if (!state.session.length) {
         els.mainPanel.innerHTML = `
           <div class="empty">
-            <h2>No hay preguntas con ese filtro</h2>
-            <p>Cambiá el banco, objetivo o tema seleccionado.</p>
+            <h2>${escapeHtml(t("noQuestionsTitle"))}</h2>
+            <p>${escapeHtml(t("noQuestionsText"))}</p>
           </div>
         `;
         updateStats();
@@ -1335,10 +1526,10 @@
           </div>
 
           <div class="nav-row">
-            <button id="prevBtn" ${state.index === 0 ? "disabled" : ""}>Anterior</button>
+            <button id="prevBtn" ${state.index === 0 ? "disabled" : ""}>${escapeHtml(t("previous"))}</button>
             <div>
-              <button id="checkBtn" class="primary">Revisar respuesta</button>
-              <button id="nextBtn">Siguiente</button>
+              <button id="checkBtn" class="primary">${escapeHtml(t("checkAnswer"))}</button>
+              <button id="nextBtn">${escapeHtml(t("next"))}</button>
             </div>
           </div>
         </div>
@@ -1436,20 +1627,20 @@
 
       els.mainPanel.innerHTML = `
         <div class="results">
-          <h2>Sesión completada</h2>
-          <p>Respondiste ${answered} de ${total} preguntas.</p>
+          <h2>${escapeHtml(t("completed"))}</h2>
+          <p>${escapeHtml(t("answeredOf").replace("{answered}", answered).replace("{total}", total))}</p>
 
           <div class="result-grid">
-            <div class="stat"><div class="num">${score}%</div><div class="label">Puntaje</div></div>
-            <div class="stat"><div class="num">${correct}</div><div class="label">Correctas</div></div>
-            <div class="stat"><div class="num">${total - correct}</div><div class="label">Por repasar</div></div>
+            <div class="stat"><div class="num">${score}%</div><div class="label">${escapeHtml(t("score"))}</div></div>
+            <div class="stat"><div class="num">${correct}</div><div class="label">${escapeHtml(t("correct"))}</div></div>
+            <div class="stat"><div class="num">${total - correct}</div><div class="label">${escapeHtml(t("review"))}</div></div>
           </div>
 
-          <button class="primary" onclick="startSession()">Nueva sesión</button>
+          <button class="primary" onclick="startSession()">${escapeHtml(t("newSession"))}</button>
 
           <div class="review-list">
             ${missed.length ? missed.map(item => renderReviewItem(item)).join("") : `
-              <div class="review-item"><strong>Excelente.</strong><br>No hubo respuestas incorrectas en esta sesión.</div>
+              <div class="review-item"><strong>${escapeHtml(t("excellent"))}</strong><br>${escapeHtml(t("noIncorrect"))}</div>
             `}
           </div>
         </div>
@@ -1484,8 +1675,8 @@
       state.locked = false;
       els.mainPanel.innerHTML = `
         <div class="empty">
-          <h2>Listo para practicar</h2>
-          <p>Elegí la configuración y presioná <strong>Nueva sesión</strong>.</p>
+          <h2>${escapeHtml(t("readyTitle"))}</h2>
+          <p>${t("readyText")}</p>
         </div>
       `;
       updateStats();
@@ -1532,11 +1723,13 @@
     els.newSessionBtn.addEventListener("click", startSession);
     els.resetBtn.addEventListener("click", resetSession);
     els.questionSetSelect.addEventListener("change", resetSession);
+    document.getElementById("langToggle").addEventListener("click", toggleLanguage);
 
     renderSummary();
     renderStudyHub();
     renderFlashcards();
     loadBank();
+    applyLanguage();
   </script>
 </body>
 </html>
