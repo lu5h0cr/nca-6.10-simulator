@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NCA 6.10 Simulator</title>
+  <style>
+    :root {
+      --bg: #080d17;
+      --panel: #111827;
+      --panel-2: #172033;
+      --text: #eef2ff;
+      --muted: #a7b0c4;
+      --border: #283449;
+      --accent: #18c9c9;
+      --accent-2: #8b5cf6;
+      --good: #22c55e;
+      --bad: #ef4444;
+      --warn: #f59e0b;
+      --shadow: 0 18px 45px rgba(0, 0, 0, .35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(24, 201, 201, .16), transparent 32rem),
+        radial-gradient(circle at top right, rgba(139, 92, 246, .18), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015)), var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main { padding: 30px; }
+
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(34px, 4.6vw, 58px);
+      line-height: 1;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 760px;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    button, .btn {
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 750;
+      color: var(--text);
+      background: var(--panel-2);
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button:hover, .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(24, 201, 201, .45);
+      text-decoration: none;
+    }
+
+    button.primary, .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06101a;
+    }
+
+    button.danger { background: rgba(239, 68, 68, .16); border-color: rgba(239, 68, 68, .35); }
+    button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .stats {
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat .num {
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .sidebar {
+      padding: 18px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    select, input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #0b1220;
+      color: var(--text);
+      border-radius: 13px;
+      padding: 12px;
+      outline: none;
+    }
+
+    select:focus, input:focus { border-color: var(--accent); }
+
+    .main {
+      min-height: 560px;
+      padding: 22px;
+    }
+
+    .question-card {
+      display: grid;
+      gap: 18px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .pill.accent { color: var(--accent); border-color: rgba(24, 201, 201, .35); }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      background: #0b1220;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress > div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .2s ease;
+    }
+
+    .question {
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.22;
+      font-weight: 850;
+      margin: 2px 0 0;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      width: 100%;
+      text-align: left;
+      justify-content: flex-start;
+      background: rgba(255,255,255,.035);
+      border-color: var(--border);
+      color: var(--text);
+      padding: 15px 16px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .option.selected {
+      border-color: var(--accent);
+      background: rgba(24, 201, 201, .12);
+    }
+
+    .option.correct {
+      border-color: rgba(34, 197, 94, .65);
+      background: rgba(34, 197, 94, .15);
+    }
+
+    .option.incorrect {
+      border-color: rgba(239, 68, 68, .65);
+      background: rgba(239, 68, 68, .13);
+    }
+
+    .explanation {
+      display: none;
+      border-left: 4px solid var(--accent);
+      background: rgba(24, 201, 201, .08);
+      border-radius: 16px;
+      padding: 16px;
+      color: #dce5f7;
+      line-height: 1.55;
+    }
+
+    .explanation.show { display: block; }
+
+    .nav-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .empty, .results {
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .results h2 {
+      color: var(--text);
+      margin-top: 0;
+      font-size: 36px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .review-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      padding: 14px;
+    }
+
+    .review-item strong { color: var(--text); }
+
+    .notice {
+      border: 1px solid rgba(245, 158, 11, .35);
+      background: rgba(245, 158, 11, .09);
+      color: #ffe8ba;
+      border-radius: 16px;
+      padding: 14px;
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .result-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div class="hero-main card">
+        <div class="eyebrow">Nutanix Certified Associate</div>
+        <h1>NCA 6.10 Study Simulator</h1>
+        <p class="subtitle">
+          Practice questions focused on the NCA 6.10 exam blueprint: Prism, LCM, VM administration,
+          cluster health, storage, AHV networking, data protection, licensing, and support workflows.
+        </p>
+        <div class="hero-actions">
+          <button class="primary" id="startBtn">Start Practice</button>
+          <a class="btn" href="./docs/Guia_Estudio_NCA_610_Manual_PRO.pdf" target="_blank">Open Study Guide</a>
+        </div>
+        <div class="notice">
+          This simulator is a study tool. Questions are organized by objective and topic to help reinforce exam concepts.
+        </div>
+      </div>
+
+      <aside class="stats card">
+        <div class="stat">
+          <div class="num" id="totalQuestions">0</div>
+          <div class="label">Questions loaded</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="currentScore">0%</div>
+          <div class="label">Current score</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="answeredCount">0</div>
+          <div class="label">Answered</div>
+        </div>
+      </aside>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar card">
+        <h2 class="section-title">Practice Settings</h2>
+
+        <div class="field">
+          <label for="modeSelect">Mode</label>
+          <select id="modeSelect">
+            <option value="study">Study Mode - show explanation after answer</option>
+            <option value="exam">Exam Mode - show explanations at the end</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="objectiveSelect">Objective</label>
+          <select id="objectiveSelect">
+            <option value="all">All objectives</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="topicSelect">Topic</label>
+          <select id="topicSelect">
+            <option value="all">All topics</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="countSelect">Number of questions</label>
+          <select id="countSelect">
+            <option value="10">10 questions</option>
+            <option value="25">25 questions</option>
+            <option value="50">50 questions</option>
+            <option value="all">All filtered questions</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="shuffleSelect">Order</label>
+          <select id="shuffleSelect">
+            <option value="yes">Shuffle questions</option>
+            <option value="no">Keep original order</option>
+          </select>
+        </div>
+
+        <button class="primary" id="newSessionBtn" style="width:100%;">New Session</button>
+        <button class="danger" id="resetBtn" style="width:100%; margin-top:10px;">Reset</button>
+      </aside>
+
+      <section class="main card" id="mainPanel">
+        <div class="empty">
+          <h2>Ready to practice</h2>
+          <p>Choose your settings and press <strong>Start Practice</strong>.</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer">
+      NCA 6.10 simulator branch · Built for GitHub Pages
+    </div>
+  </div>
+
+  <script src="./data/nca610_question_bank.js"></script>
+  <script>
+    const state = {
+      bank: [],
+      session: [],
+      index: 0,
+      selectedIndex: null,
+      answers: [],
+      mode: "study",
+      locked: false
+    };
+
+    const els = {
+      totalQuestions: document.getElementById("totalQuestions"),
+      currentScore: document.getElementById("currentScore"),
+      answeredCount: document.getElementById("answeredCount"),
+      startBtn: document.getElementById("startBtn"),
+      newSessionBtn: document.getElementById("newSessionBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      objectiveSelect: document.getElementById("objectiveSelect"),
+      topicSelect: document.getElementById("topicSelect"),
+      countSelect: document.getElementById("countSelect"),
+      shuffleSelect: document.getElementById("shuffleSelect"),
+      modeSelect: document.getElementById("modeSelect"),
+      mainPanel: document.getElementById("mainPanel")
+    };
+
+    async function loadBank() {
+      try {
+        const possibleBanks = [
+          window.nca610QuestionBank,
+          window.NCA610_QUESTION_BANK,
+          window.questions,
+          window.questionBank,
+          window.ncaQuestions
+        ];
+
+        const jsBank = possibleBanks.find(item => Array.isArray(item));
+
+        if (jsBank) {
+          state.bank = jsBank;
+        } else {
+          const response = await fetch("./data/nca610_question_bank.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error(`Could not fetch JSON bank. HTTP status: ${response.status}`);
+          }
+          state.bank = await response.json();
+        }
+
+        if (!Array.isArray(state.bank)) {
+          throw new Error("Question bank is not an array.");
+        }
+
+        hydrateFilters();
+        updateStats();
+        els.mainPanel.innerHTML = `
+          <div class="empty">
+            <h2>Question bank loaded successfully</h2>
+            <p>${state.bank.length} questions are ready. Press <strong>Start Practice</strong> to begin.</p>
+          </div>
+        `;
+      } catch (error) {
+        els.mainPanel.innerHTML = `
+          <div class="empty">
+            <h2>Question bank could not be loaded</h2>
+            <p>Please confirm these files exist exactly in GitHub:</p>
+            <p><code>data/nca610_question_bank.js</code><br><code>data/nca610_question_bank.json</code></p>
+            <p>Error: ${escapeHtml(error.message)}</p>
+            <p>Tip: open the <strong>data</strong> folder in GitHub and check that the filenames match exactly.</p>
+          </div>
+        `;
+      }
+    }
+
+    function hydrateFilters() {
+      const objectives = unique(state.bank.map(q => q.objective).filter(Boolean)).sort(naturalSort);
+      const topics = unique(state.bank.map(q => q.topic).filter(Boolean)).sort(naturalSort);
+
+      els.objectiveSelect.innerHTML = `<option value="all">All objectives</option>` +
+        objectives.map(item => `<option value="${escapeAttr(item)}">Objective ${escapeHtml(item)}</option>`).join("");
+
+      els.topicSelect.innerHTML = `<option value="all">All topics</option>` +
+        topics.map(item => `<option value="${escapeAttr(item)}">${escapeHtml(item)}</option>`).join("");
+    }
+
+    function startSession() {
+      const objective = els.objectiveSelect.value;
+      const topic = els.topicSelect.value;
+      const count = els.countSelect.value;
+      state.mode = els.modeSelect.value;
+
+      let filtered = state.bank.filter(q => {
+        const objectiveOk = objective === "all" || q.objective === objective;
+        const topicOk = topic === "all" || q.topic === topic;
+        return objectiveOk && topicOk;
+      });
+
+      if (els.shuffleSelect.value === "yes") filtered = shuffle(filtered);
+
+      const take = count === "all" ? filtered.length : Math.min(Number(count), filtered.length);
+      state.session = filtered.slice(0, take);
+      state.index = 0;
+      state.answers = [];
+      state.selectedIndex = null;
+      state.locked = false;
+
+      if (!state.session.length) {
+        els.mainPanel.innerHTML = `
+          <div class="empty">
+            <h2>No questions found</h2>
+            <p>Try changing the objective or topic filters.</p>
+          </div>
+        `;
+        updateStats();
+        return;
+      }
+
+      renderQuestion();
+      updateStats();
+    }
+
+    function renderQuestion() {
+      const q = state.session[state.index];
+      const progress = ((state.index) / state.session.length) * 100;
+
+      els.mainPanel.innerHTML = `
+        <div class="question-card">
+          <div class="progress"><div style="width:${progress}%"></div></div>
+
+          <div class="meta-row">
+            <span class="pill accent">Question ${state.index + 1} / ${state.session.length}</span>
+            <span class="pill">Objective ${escapeHtml(q.objective || "N/A")}</span>
+            <span class="pill">${escapeHtml(q.topic || "General")}</span>
+            <span class="pill">${escapeHtml(q.difficulty || "Practice")}</span>
+            <span class="pill">${escapeHtml(q.sourceStatus || "Study")}</span>
+          </div>
+
+          <h2 class="question">${escapeHtml(q.question)}</h2>
+
+          <div class="options">
+            ${(q.options || []).map((option, index) => `
+              <button class="option" data-index="${index}">
+                ${String.fromCharCode(65 + index)}. ${escapeHtml(option)}
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="explanation" id="explanationBox">
+            <strong>Explanation:</strong><br>
+            ${escapeHtml(q.explanation || "No explanation provided.")}
+          </div>
+
+          <div class="nav-row">
+            <button id="prevBtn" ${state.index === 0 ? "disabled" : ""}>Previous</button>
+            <div>
+              <button id="checkBtn" class="primary">Check Answer</button>
+              <button id="nextBtn">Next</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.querySelectorAll(".option").forEach(button => {
+        button.addEventListener("click", () => selectOption(Number(button.dataset.index)));
+      });
+
+      document.getElementById("checkBtn").addEventListener("click", checkAnswer);
+      document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+      document.getElementById("prevBtn").addEventListener("click", previousQuestion);
+
+      const existing = state.answers[state.index];
+      if (existing) {
+        state.selectedIndex = existing.selectedIndex;
+        state.locked = true;
+        paintAnswer(existing.showExplanation || state.mode === "study");
+      } else {
+        state.selectedIndex = null;
+        state.locked = false;
+      }
+    }
+
+    function selectOption(index) {
+      if (state.locked) return;
+      state.selectedIndex = index;
+      document.querySelectorAll(".option").forEach(btn => btn.classList.remove("selected"));
+      const selected = document.querySelector(`.option[data-index="${index}"]`);
+      if (selected) selected.classList.add("selected");
+    }
+
+    function checkAnswer() {
+      if (state.selectedIndex === null) return;
+
+      const q = state.session[state.index];
+      const correctIndex = Number(q.correctAnswerIndex);
+      const isCorrect = state.selectedIndex === correctIndex;
+
+      state.answers[state.index] = {
+        id: q.id,
+        selectedIndex: state.selectedIndex,
+        correctIndex,
+        isCorrect,
+        showExplanation: state.mode === "study"
+      };
+
+      state.locked = true;
+      paintAnswer(state.mode === "study");
+      updateStats();
+    }
+
+    function paintAnswer(showExplanation) {
+      const q = state.session[state.index];
+      const answer = state.answers[state.index];
+      if (!answer) return;
+
+      document.querySelectorAll(".option").forEach(btn => {
+        const index = Number(btn.dataset.index);
+        btn.classList.remove("selected", "correct", "incorrect");
+
+        if (index === answer.correctIndex) btn.classList.add("correct");
+        if (index === answer.selectedIndex && !answer.isCorrect) btn.classList.add("incorrect");
+      });
+
+      const explanation = document.getElementById("explanationBox");
+      if (showExplanation && explanation) explanation.classList.add("show");
+    }
+
+    function nextQuestion() {
+      if (state.index < state.session.length - 1) {
+        state.index++;
+        renderQuestion();
+      } else {
+        renderResults();
+      }
+      updateStats();
+    }
+
+    function previousQuestion() {
+      if (state.index > 0) {
+        state.index--;
+        renderQuestion();
+      }
+      updateStats();
+    }
+
+    function renderResults() {
+      const total = state.session.length;
+      const answered = state.answers.filter(Boolean).length;
+      const correct = state.answers.filter(a => a && a.isCorrect).length;
+      const score = total ? Math.round((correct / total) * 100) : 0;
+      const missed = state.session
+        .map((q, index) => ({ q, a: state.answers[index], index }))
+        .filter(item => !item.a || !item.a.isCorrect);
+
+      els.mainPanel.innerHTML = `
+        <div class="results">
+          <h2>Session Complete</h2>
+          <p>You answered ${answered} of ${total} questions.</p>
+
+          <div class="result-grid">
+            <div class="stat"><div class="num">${score}%</div><div class="label">Score</div></div>
+            <div class="stat"><div class="num">${correct}</div><div class="label">Correct</div></div>
+            <div class="stat"><div class="num">${total - correct}</div><div class="label">To review</div></div>
+          </div>
+
+          <button class="primary" onclick="startSession()">Start New Session</button>
+
+          <div class="review-list">
+            ${missed.length ? missed.map(item => renderReviewItem(item)).join("") : `
+              <div class="review-item"><strong>Excellent work.</strong><br>No incorrect answers in this session.</div>
+            `}
+          </div>
+        </div>
+      `;
+
+      updateStats();
+    }
+
+    function renderReviewItem({ q, a, index }) {
+      const selected = a ? q.options[a.selectedIndex] : "Not answered";
+      const correct = q.options[Number(q.correctAnswerIndex)];
+      return `
+        <div class="review-item">
+          <div class="meta-row" style="margin-bottom:8px;">
+            <span class="pill accent">Q${index + 1}</span>
+            <span class="pill">Objective ${escapeHtml(q.objective || "N/A")}</span>
+            <span class="pill">${escapeHtml(q.topic || "General")}</span>
+          </div>
+          <strong>${escapeHtml(q.question)}</strong><br><br>
+          Your answer: ${escapeHtml(selected)}<br>
+          Correct answer: ${escapeHtml(correct)}<br><br>
+          <span style="color: var(--muted);">${escapeHtml(q.explanation || "")}</span>
+        </div>
+      `;
+    }
+
+    function resetSession() {
+      state.session = [];
+      state.index = 0;
+      state.answers = [];
+      state.selectedIndex = null;
+      state.locked = false;
+      els.mainPanel.innerHTML = `
+        <div class="empty">
+          <h2>Ready to practice</h2>
+          <p>Choose your settings and press <strong>Start Practice</strong>.</p>
+        </div>
+      `;
+      updateStats();
+    }
+
+    function updateStats() {
+      const totalLoaded = state.bank.length;
+      const answered = state.answers.filter(Boolean).length;
+      const correct = state.answers.filter(a => a && a.isCorrect).length;
+      const score = answered ? Math.round((correct / answered) * 100) : 0;
+
+      els.totalQuestions.textContent = totalLoaded;
+      els.answeredCount.textContent = answered;
+      els.currentScore.textContent = `${score}%`;
+    }
+
+    function unique(items) {
+      return [...new Set(items)];
+    }
+
+    function naturalSort(a, b) {
+      return String(a).localeCompare(String(b), undefined, { numeric: true });
+    }
+
+    function shuffle(items) {
+      const arr = [...items];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("`", "&#096;");
+    }
+
+    els.startBtn.addEventListener("click", startSession);
+    els.newSessionBtn.addEventListener("click", startSession);
+    els.resetBtn.addEventListener("click", resetSession);
+
+    loadBank();
+  </script>
+</body>
+</html>
