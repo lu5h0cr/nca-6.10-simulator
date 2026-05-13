@@ -1,0 +1,9 @@
+sourceQuestion,providedAnswer,status,decision
+Which product or feature is most suitable for deploying a Microsoft SQL cluster in a Nutanix environment?,Objects,CORRECTED,Use Nutanix Volumes for shared block/iSCSI-style SQL clustering scenarios. Created corrected question NCA610-STO-004.
+Single chart with logical usage for three storage containers,Entity Chart,CORRECTED,Metric Chart is more appropriate for one metric across multiple entities. Created corrected question NCA610-MON-001.
+Requirement before configuring RF1,Node count,CORRECTED,Main exam concept is application resiliency/data protection because RF1 maintains a single copy. Created corrected question NCA610-STO-005.
+Virtual firewall on each node wants VM affinity to host,VM Protection Policies,CORRECTED,Agent VM configuration is the better fit for per-host service appliance behavior. Created corrected question NCA610-VM-001.
+Red heart best dashboard to isolate cause,Hardware,CORRECTED,Health dashboard is the dedicated starting point for health checks and root cause isolation. Created corrected question NCA610-HEA-001.
+CPU Ready time impacts which entity?,Oplog,CORRECTED,CPU ready time is a VM CPU scheduling/contention metric. Created corrected question NCA610-VM-002.
+Field Advisories affecting clusters - most efficient way,Run NCC,NEEDS_VALIDATION,Support Portal Discoveries/Field Advisories are likely more appropriate depending wording. Excluded from final bank pending validation.
+Replication type assigned to VM to allow cross cluster live migration,Synchronous,NEEDS_VALIDATION,The wording is ambiguous and may refer to live migration/DR features beyond core NCA. Excluded from final bank pending validation.
