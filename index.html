@@ -434,24 +434,25 @@
       <button class="tab-btn active" data-view="studyView">Study Hub</button>
       <button class="tab-btn" data-view="flashView">Flashcards</button>
       <button class="tab-btn" data-view="practiceView">Simulator</button>
-      <a class="btn" href="./docs/Guia_Estudio_NCA_610_Manual_PRO.pdf" target="_blank">Open Full PDF Guide</a>
+      <button class="tab-btn" id="langToggle" type="button">Español</button>
+      <a class="btn" id="pdfGuideBtn" href="./docs/Guia_Estudio_NCA_610_Manual_PRO.pdf" target="_blank">Open Full PDF Guide</a>
     </nav>
 
     <header class="hero">
       <div class="hero-main card">
-        <div class="eyebrow">Nutanix Certified Associate</div>
-        <h1>NCA 6.10 Study Hub & Simulator</h1>
-        <p class="subtitle">
+        <div class="eyebrow" id="heroEyebrow">Nutanix Certified Associate</div>
+        <h1 id="heroTitle">NCA 6.10 Study Hub & Simulator</h1>
+        <p class="subtitle" id="heroSubtitle">
           Study the core NCA 6.10 topics first, review quick flashcards, and then practice with
           objective-based questions focused on Prism, LCM, VM administration, cluster health,
           storage, AHV networking, data protection, licensing, and support.
         </p>
         <div class="hero-actions">
-          <button class="primary" onclick="showView('studyView')">Study First</button>
-          <button onclick="showView('flashView')">Review Flashcards</button>
-          <button onclick="showView('practiceView')">Start Simulator</button>
+          <button class="primary" id="studyFirstBtn" onclick="showView('studyView')">Study First</button>
+          <button id="flashBtn" onclick="showView('flashView')">Review Flashcards</button>
+          <button id="heroStartSimBtn" onclick="startSimulatorFromHero()">Start Simulator</button>
         </div>
-        <div class="notice">
+        <div class="notice" id="flowNotice">
           Recommended flow: Study Hub → Flashcards → Simulator → Review incorrect answers → Repeat weak objectives.
         </div>
       </div>
@@ -459,15 +460,15 @@
       <aside class="stats card">
         <div class="stat">
           <div class="num" id="totalQuestions">0</div>
-          <div class="label">Questions loaded</div>
+          <div class="label" id="questionsLoadedLabel">Questions loaded</div>
         </div>
         <div class="stat">
           <div class="num" id="currentScore">0%</div>
-          <div class="label">Current score</div>
+          <div class="label" id="currentScoreLabel">Current score</div>
         </div>
         <div class="stat">
           <div class="num" id="answeredCount">0</div>
-          <div class="label">Answered</div>
+          <div class="label" id="answeredLabel">Answered</div>
         </div>
       </aside>
     </header>
@@ -486,10 +487,10 @@
     <section class="view" id="practiceView">
       <main class="layout">
         <aside class="sidebar card">
-          <h2 class="section-title">Practice Settings</h2>
+          <h2 class="section-title" id="practiceSettingsTitle">Practice Settings</h2>
 
           <div class="field">
-            <label for="modeSelect">Mode</label>
+            <label for="modeSelect" id="modeLabel">Mode</label>
             <select id="modeSelect">
               <option value="study">Study Mode - show explanation after answer</option>
               <option value="exam">Exam Mode - show explanations at the end</option>
@@ -497,21 +498,21 @@
           </div>
 
           <div class="field">
-            <label for="objectiveSelect">Objective</label>
+            <label for="objectiveSelect" id="objectiveLabel">Objective</label>
             <select id="objectiveSelect">
               <option value="all">All objectives</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="topicSelect">Topic</label>
+            <label for="topicSelect" id="topicLabel">Topic</label>
             <select id="topicSelect">
               <option value="all">All topics</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="countSelect">Number of questions</label>
+            <label for="countSelect" id="countLabel">Number of questions</label>
             <select id="countSelect">
               <option value="10">10 questions</option>
               <option value="25">25 questions</option>
@@ -521,7 +522,7 @@
           </div>
 
           <div class="field">
-            <label for="shuffleSelect">Order</label>
+            <label for="shuffleSelect" id="orderLabel">Order</label>
             <select id="shuffleSelect">
               <option value="yes">Shuffle questions</option>
               <option value="no">Keep original order</option>
@@ -534,8 +535,8 @@
 
         <section class="main card" id="mainPanel">
           <div class="empty">
-            <h2>Ready to practice</h2>
-            <p>Choose your settings and press <strong>New Session</strong>.</p>
+            <h2 id="readyTitle">Ready to practice</h2>
+            <p id="readyText">Choose your settings and press <strong>New Session</strong>.</p>
           </div>
         </section>
       </main>
@@ -817,7 +818,9 @@
     });
 
     function renderStudyHub() {
-      els.studyGrid.innerHTML = studyTopics.map(topic => `
+      const topics = currentLang === "es" ? studyTopicsEs : studyTopics;
+      const t = uiText[currentLang];
+      els.studyGrid.innerHTML = topics.map(topic => `
         <article class="study-card card">
           <div class="meta-row">
             <span class="pill accent">Objective ${escapeHtml(topic.objective)}</span>
@@ -826,62 +829,55 @@
           <h2>${escapeHtml(topic.title)}</h2>
 
           <div>
-            <h3>What you must know</h3>
+            <h3>${escapeHtml(t.know)}</h3>
             <ul>${topic.points.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
           </div>
 
           <div>
-            <h3>High-probability exam points</h3>
+            <h3>${escapeHtml(t.high)}</h3>
             <ul>${topic.high.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
           </div>
 
           <div>
-            <h3>Common mistakes</h3>
+            <h3>${escapeHtml(t.mistakes)}</h3>
             <ul>${topic.mistakes.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
           </div>
 
           <div class="mini-actions">
-            <button onclick="practiceTopic('${escapeAttr(topic.topicFilter)}')">Practice this topic</button>
+            <button onclick="practiceTopic('${escapeAttr(topic.topicFilter)}')">${escapeHtml(t.practiceThis)}</button>
           </div>
         </article>
       `).join("") + `
         <article class="study-card card">
           <div class="meta-row">
-            <span class="pill warn">Final Review</span>
+            <span class="pill warn">${escapeHtml(t.finalReview)}</span>
           </div>
-          <h2>Final Review Checklist</h2>
+          <h2>${escapeHtml(t.finalChecklist)}</h2>
           <div class="checklist">
-            ${[
-              "Can you explain the difference between Prism Central and Prism Element?",
-              "Can you identify when to use LCM Inventory, pre-checks, NCC, and maintenance mode?",
-              "Can you distinguish Redundancy Factor from Replication Factor?",
-              "Can you explain what NCC, Pulse, Alerts, Events, Audits, and logs are used for?",
-              "Can you identify basic AHV networking objects: OVS, bridge, bond, VLAN, subnet, IPAM?",
-              "Can you distinguish snapshots, recovery points, protection domains, protection policies, RPO, and RTO?",
-              "Can you identify licensing methods for connected sites and dark sites?"
-            ].map(x => `<div class="checkitem">${escapeHtml(x)}</div>`).join("")}
+            ${t.finalItems.map(x => `<div class="checkitem">${escapeHtml(x)}</div>`).join("")}
           </div>
         </article>
       `;
     }
 
     function renderFlashcards(activeIndex = 0) {
-      els.flashList.innerHTML = flashcards.map((card, index) => `
+      const cards = currentLang === "es" ? flashcardsEs : flashcards;
+      els.flashList.innerHTML = cards.map((card, index) => `
         <button class="${index === activeIndex ? "active" : ""}" onclick="renderFlashcards(${index})">
           ${index + 1}. ${escapeHtml(card[0])}
         </button>
       `).join("");
 
-      const card = flashcards[activeIndex];
+      const card = cards[activeIndex];
       els.flashDetail.innerHTML = `
         <div class="meta-row">
-          <span class="pill accent">Flashcard ${activeIndex + 1} / ${flashcards.length}</span>
+          <span class="pill accent">Flashcard ${activeIndex + 1} / ${cards.length}</span>
         </div>
         <h2>${escapeHtml(card[0])}</h2>
         <p class="answer">${escapeHtml(card[1])}</p>
         <div class="mini-actions">
           <button ${activeIndex === 0 ? "disabled" : ""} onclick="renderFlashcards(${Math.max(0, activeIndex - 1)})">Previous</button>
-          <button class="primary" ${activeIndex === flashcards.length - 1 ? "disabled" : ""} onclick="renderFlashcards(${Math.min(flashcards.length - 1, activeIndex + 1)})">Next</button>
+          <button class="primary" ${activeIndex === cards.length - 1 ? "disabled" : ""} onclick="renderFlashcards(${Math.min(cards.length - 1, activeIndex + 1)})">Next</button>
         </div>
       `;
     }
@@ -898,6 +894,372 @@
     }
 
     window.practiceTopic = practiceTopic;
+
+
+    const studyTopicsEs = [
+      {
+        title: "Resumen del examen",
+        objective: "Todos",
+        topicFilter: "all",
+        points: [
+          "El examen NCA 6.10 se enfoca en tareas operativas básicas dentro de Prism UI.",
+          "Debe saber navegar Prism Central y Prism Element, interpretar dashboards e identificar dónde se realiza cada tarea.",
+          "Es un examen de nivel associate: priorice administración, monitoreo, ciclo de vida y configuración básica del cluster."
+        ],
+        high: [
+          "50 preguntas de selección única o múltiple.",
+          "Tiempo: 90 minutos.",
+          "Versiones: AOS 6.10 y Prism Central pc2024.2."
+        ],
+        mistakes: [
+          "Estudiar solo definiciones sin saber dónde se ejecuta la acción en Prism.",
+          "Mezclar troubleshooting avanzado de NCP-MCI con fundamentos de NCA."
+        ]
+      },
+      {
+        title: "Prism Central vs Prism Element",
+        objective: "2.1 / 2.2 / 3.1",
+        topicFilter: "Prism",
+        points: [
+          "Prism Element administra localmente un solo cluster Nutanix.",
+          "Prism Central puede administrar uno o varios clusters y ofrece dashboards centralizados, categorías, reportes, políticas y servicios avanzados.",
+          "Algunas tareas locales siguen perteneciendo a Prism Element, especialmente Health Dashboard, NCC checks y operaciones específicas del cluster."
+        ],
+        high: [
+          "Muchos clusters = Prism Central.",
+          "Un cluster / salud local = Prism Element.",
+          "El login de Prism Central usa la IP de la VM de Prism Central, no la IP de la CVM ni la virtual IP del cluster."
+        ],
+        mistakes: [
+          "Asumir que todas las funciones existen igual en PE y PC.",
+          "Usar Prism Central cuando la pregunta menciona específicamente Health Dashboard o NCC checks."
+        ]
+      },
+      {
+        title: "Lifecycle Management / LCM",
+        objective: "1.1 / 1.2",
+        topicFilter: "LCM",
+        points: [
+          "LCM realiza inventario y actualizaciones de componentes de software y firmware.",
+          "LCM Inventory identifica versiones instaladas y actualizaciones disponibles.",
+          "LCM valida dependencias, ejecuta pre-checks y actualiza nodo por nodo."
+        ],
+        high: [
+          "Las actualizaciones de LCM no son reversibles.",
+          "Ejecute inventory y NCC antes de upgrades importantes.",
+          "En dark sites se usan bundles por Direct Upload o Local Web Server."
+        ],
+        mistakes: [
+          "Iniciar actualización de AOS sin revisar LCM/NCC/pre-checks.",
+          "Pensar que LCM actualiza todos los nodos al mismo tiempo."
+        ]
+      },
+      {
+        title: "VM Management",
+        objective: "2.1",
+        topicFilter: "VM Management",
+        points: [
+          "Una VM consume vCPU, memoria, vDisk y vNIC desde el hypervisor.",
+          "Tareas de VM: crear, modificar, clonar, encender/apagar, consola, migración, recovery points, snapshots y categorías.",
+          "VirtIO es importante para VMs Windows sobre AHV."
+        ],
+        high: [
+          "Prism Central puede crear y administrar VMs entre clusters registrados.",
+          "Prism Element crea y administra VMs en el cluster local.",
+          "VM-host affinity controla en qué hosts puede ejecutarse una VM."
+        ],
+        mistakes: [
+          "Confundir recovery points en Prism Central con snapshots manuales en Prism Element.",
+          "Crear reglas de afinidad con un solo host, reduciendo disponibilidad."
+        ]
+      },
+      {
+        title: "Image Management",
+        objective: "2.1",
+        topicFilter: "Image Management",
+        points: [
+          "Image Service almacena y administra ISOs e imágenes de disco para crear VMs.",
+          "Prism Central ofrece Images Dashboard para administración centralizada.",
+          "Las imágenes pueden venir de archivo local, URL o disco existente de una VM."
+        ],
+        high: [
+          "ISO = medio de instalación.",
+          "Disk image = disco virtual o disco preparado.",
+          "Image Placement Policies usan categorías para determinar dónde se colocan las imágenes."
+        ],
+        mistakes: [
+          "Asumir que una imagen cargada en Prism Element queda administrada automáticamente de forma centralizada.",
+          "No verificar Location y Policies después de cargar una imagen."
+        ]
+      },
+      {
+        title: "Storage and Resiliency",
+        objective: "4.1 / 4.2 / 4.3",
+        topicFilter: "Storage",
+        points: [
+          "AOS Storage agrupa almacenamiento físico en un pool lógico distribuido.",
+          "La jerarquía incluye tiers, storage pools, containers, vDisks y volume groups.",
+          "Compression, deduplication y erasure coding son funciones de optimización de storage."
+        ],
+        high: [
+          "Redundancy Factor = tolerancia a fallas del cluster.",
+          "Replication Factor = cantidad de copias de datos/metadata en un container.",
+          "RF2 = original + una copia; RF3 = original + dos copias."
+        ],
+        mistakes: [
+          "Confundir Redundancy Factor con Replication Factor.",
+          "Activar erasure coding para workloads intensivos en escritura sin analizar impacto."
+        ]
+      },
+      {
+        title: "AHV Networking",
+        objective: "4.5",
+        topicFilter: "AHV Networking",
+        points: [
+          "AHV usa Open vSwitch para conectar VMs, CVMs, hosts AHV y uplinks físicos.",
+          "Los bonds agrupan NICs físicas para resiliencia o distribución de tráfico.",
+          "Las redes managed usan IPAM; las unmanaged usan IP manual o DHCP externo."
+        ],
+        high: [
+          "OVS = capa de switching virtual.",
+          "Active-backup es simple y comúnmente recomendado.",
+          "Network Visualizer está en Prism Element para ver topología gráfica."
+        ],
+        mistakes: [
+          "Mezclar Balance-SLB con LACP.",
+          "Asumir que una red unmanaged asigna IP automáticamente."
+        ]
+      },
+      {
+        title: "Data Protection and DR",
+        objective: "4.6",
+        topicFilter: "Data Protection",
+        points: [
+          "Data Protection define qué se protege, dónde se replica, retención y método de recuperación.",
+          "RPO es la pérdida máxima aceptable de datos. RTO es el tiempo máximo aceptable de recuperación.",
+          "Prism Element usa protection domains y remote sites; Prism Central usa protection policies y recovery plans."
+        ],
+        high: [
+          "NearSync = RPO de 1 a 15 minutos.",
+          "Async DR = RPO de 60 minutos o más.",
+          "Metro Availability ofrece replicación síncrona en escenarios soportados."
+        ],
+        mistakes: [
+          "Tratar snapshots locales como DR completo.",
+          "Confundir Protection Domain con Protection Policy."
+        ]
+      },
+      {
+        title: "Cluster Monitoring and Health",
+        objective: "3.1 / 3.2 / 3.3",
+        topicFilter: "Monitoring",
+        points: [
+          "El monitoreo incluye rendimiento, salud, resiliencia, alertas, eventos, auditorías, logs y reportes.",
+          "NCC valida salud de AOS, hypervisor y hardware.",
+          "Pulse envía datos diagnósticos a Nutanix Insights para soporte proactivo."
+        ],
+        high: [
+          "Health Dashboard dedicado = Prism Element.",
+          "Alerts pueden requerir acción; Events son informativos.",
+          "Los logs se recolectan desde Prism Element."
+        ],
+        mistakes: [
+          "Confundir alerts con events.",
+          "Ignorar Data Resiliency Status antes de mantenimiento o upgrades."
+        ]
+      },
+      {
+        title: "Licensing and Support",
+        objective: "2.3 / 3.3",
+        topicFilter: "Licensing",
+        points: [
+          "License Manager integra flujos de licencia entre Prism y Support & Insights Portal.",
+          "Seamless Licensing es recomendado cuando hay internet.",
+          "Los casos de soporte requieren detalles claros, logs, alertas/eventos, timestamps y entidades afectadas."
+        ],
+        high: [
+          "Dark site licensing se usa cuando el cluster no tiene internet.",
+          "Support & Insights Portal contiene casos, descargas, licencias, documentación, KBs y compatibilidad.",
+          "Compatibility and Interoperability Matrix ayuda a validar combinaciones soportadas."
+        ],
+        mistakes: [
+          "Intentar usar seamless licensing en un dark site.",
+          "Abrir casos de soporte sin logs ni contexto suficiente."
+        ]
+      }
+    ];
+
+    const flashcardsEs = [
+      ["¿Qué es Prism Element?", "La consola web local para administrar y monitorear un solo cluster Nutanix."],
+      ["¿Qué es Prism Central?", "El plano de administración centralizado para uno o varios clusters, con dashboards, categorías, reportes, políticas y servicios avanzados."],
+      ["¿Qué es LCM Inventory?", "El proceso que descubre versiones instaladas de software/firmware e identifica actualizaciones disponibles."],
+      ["¿Cuáles son las dos funciones principales de LCM?", "Inventario y actualizaciones."],
+      ["¿Las actualizaciones de LCM son reversibles?", "No. Por eso son importantes la planificación y los pre-checks."],
+      ["¿Qué es NCC?", "Nutanix Cluster Check: verificaciones de salud para AOS, hypervisor y hardware."],
+      ["¿Dónde está el Health Dashboard dedicado?", "En Prism Element."],
+      ["¿Alert vs Event?", "Una alerta puede requerir atención, reconocimiento o resolución. Un evento es informativo."],
+      ["¿A qué servicio envía datos Pulse?", "A Nutanix Insights."],
+      ["¿Qué es AOS Storage?", "El storage distribuido de Nutanix que agrupa discos físicos en un pool lógico y ofrece resiliencia, rendimiento y servicios de datos."],
+      ["¿Redundancy Factor vs Replication Factor?", "Redundancy Factor describe tolerancia a fallas del cluster. Replication Factor describe cuántas copias de datos/metadata se mantienen."],
+      ["¿Qué significa RF2?", "Datos originales más una réplica."],
+      ["¿Qué significa RF3?", "Datos originales más dos réplicas, con mayores requisitos de cluster/dominio de falla."],
+      ["¿Dónde se aplican compression, deduplication y erasure coding?", "Comúnmente a nivel de storage container."],
+      ["¿Qué es Data Locality?", "Mantener los datos de una VM cerca del host donde corre para mejorar lecturas y reducir tráfico de red."],
+      ["¿Qué es Open vSwitch en AHV?", "El switch virtual de software usado por AHV para conectar VMs, CVMs, hosts y uplinks físicos."],
+      ["¿Qué es una red managed?", "Una red AHV con IPAM habilitado."],
+      ["¿Qué es una red unmanaged?", "Una red AHV sin IPAM; usa IP manual o DHCP externo."],
+      ["¿Qué es Image Service?", "Servicio Nutanix para almacenar y administrar imágenes ISO o de disco para crear VMs."],
+      ["¿Qué son Image Placement Policies?", "Políticas que usan categorías para decidir dónde colocar imágenes entre clusters."],
+      ["¿Qué es VirtIO?", "Drivers paravirtuales usados principalmente en VMs Windows sobre AHV para mejorar soporte y rendimiento."],
+      ["¿Qué es un Recovery Point?", "Un punto recuperable en el tiempo, usado en Prism Central para restauración o replicación."],
+      ["¿Qué es RPO?", "Recovery Point Objective: máxima pérdida aceptable de datos."],
+      ["¿Qué es RTO?", "Recovery Time Objective: tiempo máximo aceptable para restaurar el servicio."],
+      ["¿RPO de NearSync?", "De 1 a 15 minutos."],
+      ["¿RPO de Async DR?", "60 minutos o más."],
+      ["¿Qué es Metro Availability?", "Replicación síncrona entre sitios/storage containers soportados para escenarios de RPO muy bajo o cero."],
+      ["¿Qué es License Manager?", "Servicio de licenciamiento dentro del software del cluster que integra Prism con Support & Insights Portal."],
+      ["¿Qué es Seamless Licensing?", "Método recomendado de licenciamiento desde Prism Central cuando hay internet."],
+      ["¿Qué es Direct Upload en LCM?", "Método para subir bundles LCM manualmente, útil en dark sites."]
+    ];
+
+    let currentLang = "en";
+
+    const uiText = {
+      en: {
+        langToggle: "Español",
+        studyTab: "Study Hub",
+        flashTab: "Flashcards",
+        simTab: "Simulator",
+        pdf: "Open Full PDF Guide",
+        heroTitle: "NCA 6.10 Study Hub & Simulator",
+        subtitle: "Study the core NCA 6.10 topics first, review quick flashcards, and then practice with objective-based questions focused on Prism, LCM, VM administration, cluster health, storage, AHV networking, data protection, licensing, and support.",
+        studyFirst: "Study First",
+        reviewFlashcards: "Review Flashcards",
+        startSimulator: "Start Simulator",
+        flow: "Recommended flow: Study Hub → Flashcards → Simulator → Review incorrect answers → Repeat weak objectives.",
+        questionsLoaded: "Questions loaded",
+        currentScore: "Current score",
+        answered: "Answered",
+        practiceSettings: "Practice Settings",
+        mode: "Mode",
+        objective: "Objective",
+        topic: "Topic",
+        count: "Number of questions",
+        order: "Order",
+        newSession: "New Session",
+        reset: "Reset",
+        readyTitle: "Ready to practice",
+        readyText: 'Choose your settings and press <strong>New Session</strong>.',
+        know: "What you must know",
+        high: "High-probability exam points",
+        mistakes: "Common mistakes",
+        practiceThis: "Practice this topic",
+        finalReview: "Final Review",
+        finalChecklist: "Final Review Checklist",
+        finalItems: [
+          "Can you explain the difference between Prism Central and Prism Element?",
+          "Can you identify when to use LCM Inventory, pre-checks, NCC, and maintenance mode?",
+          "Can you distinguish Redundancy Factor from Replication Factor?",
+          "Can you explain what NCC, Pulse, Alerts, Events, Audits, and logs are used for?",
+          "Can you identify basic AHV networking objects: OVS, bridge, bond, VLAN, subnet, IPAM?",
+          "Can you distinguish snapshots, recovery points, protection domains, protection policies, RPO, and RTO?",
+          "Can you identify licensing methods for connected sites and dark sites?"
+        ]
+      },
+      es: {
+        langToggle: "English",
+        studyTab: "Guía de estudio",
+        flashTab: "Tarjetas rápidas",
+        simTab: "Simulador",
+        pdf: "Abrir guía PDF completa",
+        heroTitle: "NCA 6.10 Guía de Estudio y Simulador",
+        subtitle: "Estudiá primero los temas principales del NCA 6.10, repasá tarjetas rápidas y luego practicá con preguntas organizadas por objetivo sobre Prism, LCM, administración de VMs, salud del cluster, storage, AHV networking, data protection, licenciamiento y soporte.",
+        studyFirst: "Estudiar primero",
+        reviewFlashcards: "Repasar tarjetas",
+        startSimulator: "Iniciar simulador",
+        flow: "Flujo recomendado: Guía de estudio → Tarjetas rápidas → Simulador → Revisar errores → Repetir objetivos débiles.",
+        questionsLoaded: "Preguntas cargadas",
+        currentScore: "Puntaje actual",
+        answered: "Respondidas",
+        practiceSettings: "Configuración de práctica",
+        mode: "Modo",
+        objective: "Objetivo",
+        topic: "Tema",
+        count: "Cantidad de preguntas",
+        order: "Orden",
+        newSession: "Nueva sesión",
+        reset: "Reiniciar",
+        readyTitle: "Listo para practicar",
+        readyText: 'Elegí la configuración y presioná <strong>Nueva sesión</strong>.',
+        know: "Lo que debés saber",
+        high: "Puntos probables de examen",
+        mistakes: "Errores comunes",
+        practiceThis: "Practicar este tema",
+        finalReview: "Repaso final",
+        finalChecklist: "Checklist final de repaso",
+        finalItems: [
+          "¿Podés explicar la diferencia entre Prism Central y Prism Element?",
+          "¿Podés identificar cuándo usar LCM Inventory, pre-checks, NCC y maintenance mode?",
+          "¿Podés diferenciar Redundancy Factor de Replication Factor?",
+          "¿Podés explicar para qué sirven NCC, Pulse, Alerts, Events, Audits y logs?",
+          "¿Podés identificar objetos básicos de AHV networking: OVS, bridge, bond, VLAN, subnet e IPAM?",
+          "¿Podés diferenciar snapshots, recovery points, protection domains, protection policies, RPO y RTO?",
+          "¿Podés identificar métodos de licenciamiento para sitios conectados y dark sites?"
+        ]
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      applyLanguage();
+      renderStudyHub();
+      renderFlashcards(0);
+      resetSession();
+    }
+
+    function toggleLanguage() {
+      setLanguage(currentLang === "en" ? "es" : "en");
+    }
+
+    function applyLanguage() {
+      const t = uiText[currentLang];
+
+      document.getElementById("langToggle").textContent = t.langToggle;
+      document.querySelector('[data-view="studyView"]').textContent = t.studyTab;
+      document.querySelector('[data-view="flashView"]').textContent = t.flashTab;
+      document.querySelector('[data-view="practiceView"]').textContent = t.simTab;
+      document.getElementById("pdfGuideBtn").textContent = t.pdf;
+      document.getElementById("heroTitle").textContent = t.heroTitle;
+      document.getElementById("heroSubtitle").textContent = t.subtitle;
+      document.getElementById("studyFirstBtn").textContent = t.studyFirst;
+      document.getElementById("flashBtn").textContent = t.reviewFlashcards;
+      document.getElementById("heroStartSimBtn").textContent = t.startSimulator;
+      document.getElementById("flowNotice").textContent = t.flow;
+      document.getElementById("questionsLoadedLabel").textContent = t.questionsLoaded;
+      document.getElementById("currentScoreLabel").textContent = t.currentScore;
+      document.getElementById("answeredLabel").textContent = t.answered;
+      document.getElementById("practiceSettingsTitle").textContent = t.practiceSettings;
+      document.getElementById("modeLabel").textContent = t.mode;
+      document.getElementById("objectiveLabel").textContent = t.objective;
+      document.getElementById("topicLabel").textContent = t.topic;
+      document.getElementById("countLabel").textContent = t.count;
+      document.getElementById("orderLabel").textContent = t.order;
+      document.getElementById("newSessionBtn").textContent = t.newSession;
+      document.getElementById("resetBtn").textContent = t.reset;
+
+      const readyTitle = document.getElementById("readyTitle");
+      const readyText = document.getElementById("readyText");
+      if (readyTitle) readyTitle.textContent = t.readyTitle;
+      if (readyText) readyText.innerHTML = t.readyText;
+    }
+
+    function startSimulatorFromHero() {
+      showView("practiceView");
+      startSession();
+    }
+
+    window.toggleLanguage = toggleLanguage;
+    window.startSimulatorFromHero = startSimulatorFromHero;
 
     async function loadBank() {
       try {
@@ -1212,7 +1574,9 @@
 
     els.newSessionBtn.addEventListener("click", startSession);
     els.resetBtn.addEventListener("click", resetSession);
+    document.getElementById("langToggle").addEventListener("click", toggleLanguage);
 
+    applyLanguage();
     renderStudyHub();
     renderFlashcards();
     loadBank();
