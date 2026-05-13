@@ -1121,7 +1121,9 @@
         mistakes: "Errores comunes",
         practiceObjective: "Practicar este objetivo",
         reviewCards: "Repasar tarjetas",
-        practiceTopic: "Practicar este tema"
+        practiceTopic: "Practicar este tema",
+        previousObjective: "Objetivo anterior",
+        nextObjective: "Siguiente objetivo"
       },
       en: {
         langButton: "Español",
@@ -1182,7 +1184,9 @@
         mistakes: "Common mistakes",
         practiceObjective: "Practice this objective",
         reviewCards: "Review flashcards",
-        practiceTopic: "Practice this topic"
+        practiceTopic: "Practice this topic",
+        previousObjective: "Previous objective",
+        nextObjective: "Next objective"
       }
     };
 
@@ -1307,9 +1311,17 @@
       `).join("");
     }
 
+    function getSummaryIndex(id) {
+      return summaryObjectives.findIndex(x => x.id === id);
+    }
+
     function renderSummary(id = "overview") {
       const item = summaryObjectives.find(x => x.id === id) || summaryObjectives[0];
       currentSummaryId = item.id;
+      const currentIndex = getSummaryIndex(item.id);
+      const prevItem = summaryObjectives[currentIndex - 1];
+      const nextItem = summaryObjectives[currentIndex + 1];
+
       renderSummaryMenu(item.id);
       els.summaryDetail.innerHTML = `
         <div class="pill-row">
@@ -1330,8 +1342,17 @@
         <ul>${item.commonMistakes.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
 
         <div class="hero-actions">
-          <button class="primary" onclick="practiceObjective('${escapeAttr(item.objective)}')">${escapeHtml(t("practiceObjective"))}</button>
-          <button id="heroFlashBtn" onclick="showView('flashView')">${escapeHtml(t("reviewCards"))}</button>
+          <button ${prevItem ? "" : "disabled"} onclick="${prevItem ? `renderSummary('${prevItem.id}')` : ""}">
+            ${escapeHtml(t("previousObjective"))}
+          </button>
+          <button class="primary" ${nextItem ? "" : "disabled"} onclick="${nextItem ? `renderSummary('${nextItem.id}')` : ""}">
+            ${escapeHtml(t("nextObjective"))}
+          </button>
+        </div>
+
+        <div class="hero-actions">
+          <button onclick="practiceObjective('${escapeAttr(item.objective)}')">${escapeHtml(t("practiceObjective"))}</button>
+          <button onclick="showView('flashView')">${escapeHtml(t("reviewCards"))}</button>
         </div>
       `;
     }
