@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NCA 6.10 Simulator</title>
+  <title>NCA 6.10 Study Hub & Simulator</title>
   <style>
     :root {
       --bg: #080d17;
@@ -37,14 +37,43 @@
     a:hover { text-decoration: underline; }
 
     .shell {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1220px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 32px 0 48px;
+      padding: 28px 0 48px;
+    }
+
+    .topnav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 12px 0;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(8,13,23,.96), rgba(8,13,23,.72));
+    }
+
+    .tab-btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-weight: 800;
+      color: var(--text);
+      background: rgba(255,255,255,.035);
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06101a;
+      border-color: transparent;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.4fr .8fr;
+      grid-template-columns: 1.35fr .8fr;
       gap: 22px;
       align-items: stretch;
       margin-bottom: 22px;
@@ -61,7 +90,7 @@
 
     .eyebrow {
       color: var(--accent);
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: .09em;
       text-transform: uppercase;
       font-size: 12px;
@@ -74,10 +103,13 @@
       line-height: 1;
     }
 
+    h2 { margin-top: 0; }
+    h3 { margin-bottom: 8px; }
+
     .subtitle {
       color: var(--muted);
       font-size: 17px;
-      max-width: 760px;
+      max-width: 800px;
       line-height: 1.55;
     }
 
@@ -92,7 +124,7 @@
       border: 1px solid transparent;
       border-radius: 14px;
       padding: 12px 16px;
-      font-weight: 750;
+      font-weight: 800;
       color: var(--text);
       background: var(--panel-2);
       cursor: pointer;
@@ -130,15 +162,103 @@
       padding: 16px;
     }
 
-    .stat .num {
-      font-size: 26px;
-      font-weight: 900;
+    .stat .num { font-size: 26px; font-weight: 950; }
+    .stat .label { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+    .notice {
+      border: 1px solid rgba(245, 158, 11, .35);
+      background: rgba(245, 158, 11, .09);
+      color: #ffe8ba;
+      border-radius: 16px;
+      padding: 14px;
+      line-height: 1.5;
+      margin-top: 14px;
     }
 
-    .stat .label {
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .study-card {
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .study-card p, .study-card li {
       color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .study-card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pill.accent { color: var(--accent); border-color: rgba(24, 201, 201, .35); }
+    .pill.good { color: #bbf7d0; border-color: rgba(34,197,94,.35); }
+    .pill.warn { color: #fde68a; border-color: rgba(245,158,11,.35); }
+
+    .mini-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top: 4px; }
+
+    .flashcards-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .flash-list {
+      padding: 18px;
+      max-height: 680px;
+      overflow: auto;
+    }
+
+    .flash-list button {
+      width: 100%;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+      text-align: left;
+      background: rgba(255,255,255,.035);
+      border-color: var(--border);
+    }
+
+    .flash-list button.active {
+      border-color: var(--accent);
+      background: rgba(24,201,201,.1);
+    }
+
+    .flash-detail {
+      padding: 26px;
+      min-height: 420px;
+    }
+
+    .flash-detail .answer {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 17px;
     }
 
     .layout {
@@ -151,13 +271,10 @@
     .sidebar {
       padding: 18px;
       position: sticky;
-      top: 18px;
+      top: 72px;
     }
 
-    .section-title {
-      margin: 0 0 12px;
-      font-size: 18px;
-    }
+    .section-title { margin: 0 0 12px; font-size: 18px; }
 
     .field {
       display: grid;
@@ -168,7 +285,7 @@
     label {
       color: var(--muted);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     select, input {
@@ -188,29 +305,7 @@
       padding: 22px;
     }
 
-    .question-card {
-      display: grid;
-      gap: 18px;
-    }
-
-    .meta-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .pill {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.035);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 7px 10px;
-      font-size: 12px;
-      font-weight: 750;
-    }
-
-    .pill.accent { color: var(--accent); border-color: rgba(24, 201, 201, .35); }
+    .question-card { display: grid; gap: 18px; }
 
     .progress {
       width: 100%;
@@ -231,14 +326,11 @@
     .question {
       font-size: clamp(22px, 3vw, 32px);
       line-height: 1.22;
-      font-weight: 850;
+      font-weight: 900;
       margin: 2px 0 0;
     }
 
-    .options {
-      display: grid;
-      gap: 12px;
-    }
+    .options { display: grid; gap: 12px; }
 
     .option {
       width: 100%;
@@ -249,23 +341,12 @@
       color: var(--text);
       padding: 15px 16px;
       line-height: 1.35;
-      font-weight: 650;
+      font-weight: 700;
     }
 
-    .option.selected {
-      border-color: var(--accent);
-      background: rgba(24, 201, 201, .12);
-    }
-
-    .option.correct {
-      border-color: rgba(34, 197, 94, .65);
-      background: rgba(34, 197, 94, .15);
-    }
-
-    .option.incorrect {
-      border-color: rgba(239, 68, 68, .65);
-      background: rgba(239, 68, 68, .13);
-    }
+    .option.selected { border-color: var(--accent); background: rgba(24, 201, 201, .12); }
+    .option.correct { border-color: rgba(34, 197, 94, .65); background: rgba(34, 197, 94, .15); }
+    .option.incorrect { border-color: rgba(239, 68, 68, .65); background: rgba(239, 68, 68, .13); }
 
     .explanation {
       display: none;
@@ -294,11 +375,7 @@
       color: var(--muted);
     }
 
-    .results h2 {
-      color: var(--text);
-      margin-top: 0;
-      font-size: 36px;
-    }
+    .results h2 { color: var(--text); margin-top: 0; font-size: 36px; }
 
     .result-grid {
       display: grid;
@@ -323,14 +400,18 @@
 
     .review-item strong { color: var(--text); }
 
-    .notice {
-      border: 1px solid rgba(245, 158, 11, .35);
-      background: rgba(245, 158, 11, .09);
-      color: #ffe8ba;
-      border-radius: 16px;
-      padding: 14px;
-      line-height: 1.5;
-      margin-top: 14px;
+    .checklist {
+      display:grid;
+      gap:10px;
+    }
+
+    .checkitem {
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px;
+      color:var(--muted);
+      line-height:1.45;
     }
 
     .footer {
@@ -340,8 +421,8 @@
       text-align: center;
     }
 
-    @media (max-width: 900px) {
-      .hero, .layout { grid-template-columns: 1fr; }
+    @media (max-width: 920px) {
+      .hero, .layout, .study-grid, .flashcards-layout { grid-template-columns: 1fr; }
       .sidebar { position: static; }
       .result-grid { grid-template-columns: 1fr; }
     }
@@ -349,20 +430,29 @@
 </head>
 <body>
   <div class="shell">
+    <nav class="topnav">
+      <button class="tab-btn active" data-view="studyView">Study Hub</button>
+      <button class="tab-btn" data-view="flashView">Flashcards</button>
+      <button class="tab-btn" data-view="practiceView">Simulator</button>
+      <a class="btn" href="./docs/Guia_Estudio_NCA_610_Manual_PRO.pdf" target="_blank">Open Full PDF Guide</a>
+    </nav>
+
     <header class="hero">
       <div class="hero-main card">
         <div class="eyebrow">Nutanix Certified Associate</div>
-        <h1>NCA 6.10 Study Simulator</h1>
+        <h1>NCA 6.10 Study Hub & Simulator</h1>
         <p class="subtitle">
-          Practice questions focused on the NCA 6.10 exam blueprint: Prism, LCM, VM administration,
-          cluster health, storage, AHV networking, data protection, licensing, and support workflows.
+          Study the core NCA 6.10 topics first, review quick flashcards, and then practice with
+          objective-based questions focused on Prism, LCM, VM administration, cluster health,
+          storage, AHV networking, data protection, licensing, and support.
         </p>
         <div class="hero-actions">
-          <button class="primary" id="startBtn">Start Practice</button>
-          <a class="btn" href="./docs/Guia_Estudio_NCA_610_Manual_PRO.pdf" target="_blank">Open Study Guide</a>
+          <button class="primary" onclick="showView('studyView')">Study First</button>
+          <button onclick="showView('flashView')">Review Flashcards</button>
+          <button onclick="showView('practiceView')">Start Simulator</button>
         </div>
         <div class="notice">
-          This simulator is a study tool. Questions are organized by objective and topic to help reinforce exam concepts.
+          Recommended flow: Study Hub → Flashcards → Simulator → Review incorrect answers → Repeat weak objectives.
         </div>
       </div>
 
@@ -382,69 +472,308 @@
       </aside>
     </header>
 
-    <main class="layout">
-      <aside class="sidebar card">
-        <h2 class="section-title">Practice Settings</h2>
+    <section class="view active" id="studyView">
+      <div class="study-grid" id="studyGrid"></div>
+    </section>
 
-        <div class="field">
-          <label for="modeSelect">Mode</label>
-          <select id="modeSelect">
-            <option value="study">Study Mode - show explanation after answer</option>
-            <option value="exam">Exam Mode - show explanations at the end</option>
-          </select>
-        </div>
+    <section class="view" id="flashView">
+      <div class="flashcards-layout">
+        <aside class="flash-list card" id="flashList"></aside>
+        <article class="flash-detail card" id="flashDetail"></article>
+      </div>
+    </section>
 
-        <div class="field">
-          <label for="objectiveSelect">Objective</label>
-          <select id="objectiveSelect">
-            <option value="all">All objectives</option>
-          </select>
-        </div>
+    <section class="view" id="practiceView">
+      <main class="layout">
+        <aside class="sidebar card">
+          <h2 class="section-title">Practice Settings</h2>
 
-        <div class="field">
-          <label for="topicSelect">Topic</label>
-          <select id="topicSelect">
-            <option value="all">All topics</option>
-          </select>
-        </div>
+          <div class="field">
+            <label for="modeSelect">Mode</label>
+            <select id="modeSelect">
+              <option value="study">Study Mode - show explanation after answer</option>
+              <option value="exam">Exam Mode - show explanations at the end</option>
+            </select>
+          </div>
 
-        <div class="field">
-          <label for="countSelect">Number of questions</label>
-          <select id="countSelect">
-            <option value="10">10 questions</option>
-            <option value="25">25 questions</option>
-            <option value="50">50 questions</option>
-            <option value="all">All filtered questions</option>
-          </select>
-        </div>
+          <div class="field">
+            <label for="objectiveSelect">Objective</label>
+            <select id="objectiveSelect">
+              <option value="all">All objectives</option>
+            </select>
+          </div>
 
-        <div class="field">
-          <label for="shuffleSelect">Order</label>
-          <select id="shuffleSelect">
-            <option value="yes">Shuffle questions</option>
-            <option value="no">Keep original order</option>
-          </select>
-        </div>
+          <div class="field">
+            <label for="topicSelect">Topic</label>
+            <select id="topicSelect">
+              <option value="all">All topics</option>
+            </select>
+          </div>
 
-        <button class="primary" id="newSessionBtn" style="width:100%;">New Session</button>
-        <button class="danger" id="resetBtn" style="width:100%; margin-top:10px;">Reset</button>
-      </aside>
+          <div class="field">
+            <label for="countSelect">Number of questions</label>
+            <select id="countSelect">
+              <option value="10">10 questions</option>
+              <option value="25">25 questions</option>
+              <option value="50">50 questions</option>
+              <option value="all">All filtered questions</option>
+            </select>
+          </div>
 
-      <section class="main card" id="mainPanel">
-        <div class="empty">
-          <h2>Ready to practice</h2>
-          <p>Choose your settings and press <strong>Start Practice</strong>.</p>
-        </div>
-      </section>
-    </main>
+          <div class="field">
+            <label for="shuffleSelect">Order</label>
+            <select id="shuffleSelect">
+              <option value="yes">Shuffle questions</option>
+              <option value="no">Keep original order</option>
+            </select>
+          </div>
+
+          <button class="primary" id="newSessionBtn" style="width:100%;">New Session</button>
+          <button class="danger" id="resetBtn" style="width:100%; margin-top:10px;">Reset</button>
+        </aside>
+
+        <section class="main card" id="mainPanel">
+          <div class="empty">
+            <h2>Ready to practice</h2>
+            <p>Choose your settings and press <strong>New Session</strong>.</p>
+          </div>
+        </section>
+      </main>
+    </section>
 
     <div class="footer">
-      NCA 6.10 simulator branch · Built for GitHub Pages
+      NCA 6.10 study branch · Built for GitHub Pages
     </div>
   </div>
 
   <script src="./data/nca610_question_bank.js"></script>
   <script>
+    const studyTopics = [
+      {
+        title: "Exam Overview",
+        objective: "All",
+        topicFilter: "all",
+        points: [
+          "The NCA 6.10 exam focuses on basic operational tasks in Prism UI.",
+          "Know how to navigate Prism Central and Prism Element, interpret dashboards, and identify where tasks are performed.",
+          "The exam is associate-level: prioritize administration, monitoring, lifecycle, and core cluster configuration."
+        ],
+        high: [
+          "50 questions, multiple choice and multiple response.",
+          "Time limit: 90 minutes.",
+          "Versions: AOS 6.10 and Prism Central pc2024.2."
+        ],
+        mistakes: [
+          "Studying only definitions without knowing where the action is performed in Prism.",
+          "Mixing advanced NCP-MCI troubleshooting with NCA-level fundamentals."
+        ]
+      },
+      {
+        title: "Prism Central vs Prism Element",
+        objective: "2.1 / 2.2 / 3.1",
+        topicFilter: "Prism",
+        points: [
+          "Prism Element manages one Nutanix cluster locally.",
+          "Prism Central can manage one or many clusters and provides centralized dashboards, categories, reports, policies, and advanced services.",
+          "Some local tasks remain in Prism Element, especially Health Dashboard, NCC checks, and certain cluster-specific operations."
+        ],
+        high: [
+          "Many clusters = Prism Central.",
+          "One cluster / local cluster health = Prism Element.",
+          "Prism Central login uses the Prism Central VM IP, not the CVM or cluster virtual IP."
+        ],
+        mistakes: [
+          "Assuming every feature exists in both PE and PC.",
+          "Using Prism Central when a question specifically mentions the Health Dashboard and NCC checks."
+        ]
+      },
+      {
+        title: "Lifecycle Management / LCM",
+        objective: "1.1 / 1.2",
+        topicFilter: "LCM",
+        points: [
+          "LCM performs inventory and updates for software and firmware components.",
+          "LCM inventory identifies installed versions and available updates.",
+          "LCM validates dependencies, runs pre-checks, and updates nodes one at a time."
+        ],
+        high: [
+          "LCM updates are not reversible.",
+          "Run inventory and NCC before important upgrades.",
+          "For dark sites, use Direct Upload or Local Web Server bundles."
+        ],
+        mistakes: [
+          "Starting with AOS upgrade without checking LCM/NCC/pre-checks.",
+          "Thinking LCM updates all nodes at the same time."
+        ]
+      },
+      {
+        title: "VM Management",
+        objective: "2.1",
+        topicFilter: "VM Management",
+        points: [
+          "A VM consumes vCPU, memory, vDisk, and vNIC resources from the hypervisor.",
+          "VM tasks include create, update, clone, power actions, console access, migration, recovery points, snapshots, and categories.",
+          "VirtIO drivers are important for Windows VMs on AHV."
+        ],
+        high: [
+          "Prism Central can create/manage VMs across registered clusters.",
+          "Prism Element creates/manages VMs in the local cluster.",
+          "VM-host affinity controls where a VM can run."
+        ],
+        mistakes: [
+          "Confusing recovery points in Prism Central with manual snapshots in Prism Element.",
+          "Creating affinity rules with only one host, which can reduce availability."
+        ]
+      },
+      {
+        title: "Image Management",
+        objective: "2.1",
+        topicFilter: "Image Management",
+        points: [
+          "Image Service stores and manages ISO and disk images for VM creation.",
+          "Prism Central provides an Images Dashboard for centralized image management.",
+          "Images can come from a local file, URL, or existing VM disk."
+        ],
+        high: [
+          "ISO = installation media.",
+          "Disk image = virtual disk or prepared disk.",
+          "Image Placement Policies use categories to determine where images are placed."
+        ],
+        mistakes: [
+          "Assuming an image loaded in Prism Element is automatically centrally managed.",
+          "Forgetting to verify image location and policies."
+        ]
+      },
+      {
+        title: "Storage and Resiliency",
+        objective: "4.1 / 4.2 / 4.3",
+        topicFilter: "Storage",
+        points: [
+          "AOS Storage aggregates physical storage into a distributed logical pool.",
+          "Storage hierarchy includes tiers, storage pools, containers, vDisks, and volume groups.",
+          "Compression, deduplication, and erasure coding are storage optimization features."
+        ],
+        high: [
+          "Redundancy Factor = cluster fault tolerance.",
+          "Replication Factor = number of data/metadata copies in a container.",
+          "RF2 = original + one copy; RF3 = original + two copies."
+        ],
+        mistakes: [
+          "Confusing Redundancy Factor with Replication Factor.",
+          "Enabling erasure coding for write-intensive workloads without considering impact."
+        ]
+      },
+      {
+        title: "AHV Networking",
+        objective: "4.5",
+        topicFilter: "AHV Networking",
+        points: [
+          "AHV uses Open vSwitch to connect VMs, CVMs, AHV hosts, and physical uplinks.",
+          "Bonds group physical NICs for resiliency and/or traffic distribution.",
+          "Managed networks use IPAM; unmanaged networks rely on manual IP or external DHCP."
+        ],
+        high: [
+          "OVS = virtual switch layer.",
+          "Active-backup is simple and commonly recommended.",
+          "Network Visualizer is a Prism Element tool for graphical topology."
+        ],
+        mistakes: [
+          "Mixing Balance-SLB with LACP.",
+          "Assuming unmanaged networks assign IPs automatically."
+        ]
+      },
+      {
+        title: "Data Protection and DR",
+        objective: "4.6",
+        topicFilter: "Data Protection",
+        points: [
+          "Data protection defines what is protected, where it is replicated, retention, and recovery method.",
+          "RPO means maximum acceptable data loss. RTO means maximum acceptable restore time.",
+          "Prism Element uses protection domains and remote sites; Prism Central uses protection policies and recovery plans."
+        ],
+        high: [
+          "NearSync = 1 to 15 minute RPO.",
+          "Async DR = 60 minutes or greater RPO.",
+          "Metro Availability provides synchronous replication for supported scenarios."
+        ],
+        mistakes: [
+          "Treating local snapshots as complete DR.",
+          "Confusing Protection Domain with Protection Policy."
+        ]
+      },
+      {
+        title: "Cluster Monitoring and Health",
+        objective: "3.1 / 3.2 / 3.3",
+        topicFilter: "Monitoring",
+        points: [
+          "Monitoring includes performance, health, resiliency, alerts, events, audits, logs, and reports.",
+          "NCC validates AOS, hypervisor, and hardware health.",
+          "Pulse sends diagnostic data to Nutanix Insights for proactive support."
+        ],
+        high: [
+          "Health Dashboard dedicated view = Prism Element.",
+          "Alerts may require action; Events are informational.",
+          "Logs are collected from Prism Element."
+        ],
+        mistakes: [
+          "Confusing alerts with events.",
+          "Ignoring Data Resiliency Status before maintenance or upgrades."
+        ]
+      },
+      {
+        title: "Licensing and Support",
+        objective: "2.3 / 3.3",
+        topicFilter: "Licensing",
+        points: [
+          "License Manager integrates licensing workflows between Prism and the Support & Insights Portal.",
+          "Seamless Licensing is recommended when the environment has internet connectivity.",
+          "Support cases require clear issue details, logs, alerts/events, timestamps, and affected entities."
+        ],
+        high: [
+          "Dark site licensing is used when the cluster has no internet access.",
+          "Support & Insights Portal contains cases, downloads, licenses, documentation, KBs, and compatibility resources.",
+          "Compatibility and Interoperability Matrix helps validate supported combinations."
+        ],
+        mistakes: [
+          "Trying to use seamless licensing for a dark site.",
+          "Opening support cases without logs or enough context."
+        ]
+      }
+    ];
+
+    const flashcards = [
+      ["What is Prism Element?", "The local web console used to manage and monitor a single Nutanix cluster."],
+      ["What is Prism Central?", "The centralized management plane that can manage one or many clusters and provides dashboards, categories, reports, policies, automation, and advanced services."],
+      ["What is LCM Inventory?", "The process that discovers installed software/firmware versions and identifies available updates."],
+      ["What are the two main functions of LCM?", "Inventory and updates."],
+      ["Are LCM updates reversible?", "No. LCM updates are not reversible, so planning and pre-checks are important."],
+      ["What is NCC?", "Nutanix Cluster Check, a set of health checks for AOS, hypervisor, and hardware."],
+      ["Where is the dedicated Health Dashboard?", "Prism Element."],
+      ["Alert vs Event?", "An alert can require attention, acknowledgement, or resolution. An event is informational."],
+      ["What does Pulse send data to?", "Nutanix Insights."],
+      ["What is AOS Storage?", "Nutanix distributed storage that aggregates physical disks into a logical pool and provides resiliency, performance, and data services."],
+      ["Redundancy Factor vs Replication Factor?", "Redundancy Factor describes cluster fault tolerance. Replication Factor describes how many copies of data/metadata are kept."],
+      ["What does RF2 mean?", "Original data plus one replica."],
+      ["What does RF3 mean?", "Original data plus two replicas, with higher cluster/failure-domain requirements."],
+      ["Where are compression, deduplication, and erasure coding commonly applied?", "At the storage container level."],
+      ["What is Data Locality?", "Keeping VM data close to the host where the VM runs to improve read performance and reduce network traffic."],
+      ["What is Open vSwitch in AHV?", "The software virtual switch used by AHV to connect VMs, CVMs, hosts, and physical uplinks."],
+      ["What is a managed network?", "An AHV network with IPAM enabled."],
+      ["What is an unmanaged network?", "An AHV network without IPAM; IP addresses are manual or provided by external DHCP."],
+      ["What is Image Service?", "A Nutanix service for storing and managing images such as ISO and disk images for VM creation."],
+      ["What are Image Placement Policies?", "Policies that use categories to determine where images should be placed across clusters."],
+      ["What is VirtIO?", "Paravirtualized drivers used mainly for Windows VMs on AHV to improve device support and performance."],
+      ["What is a Recovery Point?", "A recoverable point-in-time state, commonly used in Prism Central for restore or replication."],
+      ["What is RPO?", "Recovery Point Objective: the maximum acceptable amount of data loss."],
+      ["What is RTO?", "Recovery Time Objective: the maximum acceptable time to restore service."],
+      ["NearSync RPO?", "1 to 15 minutes."],
+      ["Async DR RPO?", "60 minutes or greater."],
+      ["What is Metro Availability?", "Synchronous replication between supported sites/storage containers for very low or zero RPO scenarios."],
+      ["What is License Manager?", "A licensing service in the cluster software that integrates Prism licensing workflows with the Support & Insights Portal."],
+      ["What is Seamless Licensing?", "A recommended licensing method through Prism Central when internet connectivity is available."],
+      ["What is Direct Upload in LCM?", "A method to upload LCM bundles manually, commonly useful for dark sites."]
+    ];
+
     const state = {
       bank: [],
       session: [],
@@ -459,7 +788,6 @@
       totalQuestions: document.getElementById("totalQuestions"),
       currentScore: document.getElementById("currentScore"),
       answeredCount: document.getElementById("answeredCount"),
-      startBtn: document.getElementById("startBtn"),
       newSessionBtn: document.getElementById("newSessionBtn"),
       resetBtn: document.getElementById("resetBtn"),
       objectiveSelect: document.getElementById("objectiveSelect"),
@@ -467,8 +795,109 @@
       countSelect: document.getElementById("countSelect"),
       shuffleSelect: document.getElementById("shuffleSelect"),
       modeSelect: document.getElementById("modeSelect"),
-      mainPanel: document.getElementById("mainPanel")
+      mainPanel: document.getElementById("mainPanel"),
+      studyGrid: document.getElementById("studyGrid"),
+      flashList: document.getElementById("flashList"),
+      flashDetail: document.getElementById("flashDetail")
     };
+
+    function showView(id) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll(".tab-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.view === id);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    window.showView = showView;
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => showView(btn.dataset.view));
+    });
+
+    function renderStudyHub() {
+      els.studyGrid.innerHTML = studyTopics.map(topic => `
+        <article class="study-card card">
+          <div class="meta-row">
+            <span class="pill accent">Objective ${escapeHtml(topic.objective)}</span>
+            <span class="pill good">${escapeHtml(topic.title)}</span>
+          </div>
+          <h2>${escapeHtml(topic.title)}</h2>
+
+          <div>
+            <h3>What you must know</h3>
+            <ul>${topic.points.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+          </div>
+
+          <div>
+            <h3>High-probability exam points</h3>
+            <ul>${topic.high.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+          </div>
+
+          <div>
+            <h3>Common mistakes</h3>
+            <ul>${topic.mistakes.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+          </div>
+
+          <div class="mini-actions">
+            <button onclick="practiceTopic('${escapeAttr(topic.topicFilter)}')">Practice this topic</button>
+          </div>
+        </article>
+      `).join("") + `
+        <article class="study-card card">
+          <div class="meta-row">
+            <span class="pill warn">Final Review</span>
+          </div>
+          <h2>Final Review Checklist</h2>
+          <div class="checklist">
+            ${[
+              "Can you explain the difference between Prism Central and Prism Element?",
+              "Can you identify when to use LCM Inventory, pre-checks, NCC, and maintenance mode?",
+              "Can you distinguish Redundancy Factor from Replication Factor?",
+              "Can you explain what NCC, Pulse, Alerts, Events, Audits, and logs are used for?",
+              "Can you identify basic AHV networking objects: OVS, bridge, bond, VLAN, subnet, IPAM?",
+              "Can you distinguish snapshots, recovery points, protection domains, protection policies, RPO, and RTO?",
+              "Can you identify licensing methods for connected sites and dark sites?"
+            ].map(x => `<div class="checkitem">${escapeHtml(x)}</div>`).join("")}
+          </div>
+        </article>
+      `;
+    }
+
+    function renderFlashcards(activeIndex = 0) {
+      els.flashList.innerHTML = flashcards.map((card, index) => `
+        <button class="${index === activeIndex ? "active" : ""}" onclick="renderFlashcards(${index})">
+          ${index + 1}. ${escapeHtml(card[0])}
+        </button>
+      `).join("");
+
+      const card = flashcards[activeIndex];
+      els.flashDetail.innerHTML = `
+        <div class="meta-row">
+          <span class="pill accent">Flashcard ${activeIndex + 1} / ${flashcards.length}</span>
+        </div>
+        <h2>${escapeHtml(card[0])}</h2>
+        <p class="answer">${escapeHtml(card[1])}</p>
+        <div class="mini-actions">
+          <button ${activeIndex === 0 ? "disabled" : ""} onclick="renderFlashcards(${Math.max(0, activeIndex - 1)})">Previous</button>
+          <button class="primary" ${activeIndex === flashcards.length - 1 ? "disabled" : ""} onclick="renderFlashcards(${Math.min(flashcards.length - 1, activeIndex + 1)})">Next</button>
+        </div>
+      `;
+    }
+
+    window.renderFlashcards = renderFlashcards;
+
+    function practiceTopic(topic) {
+      showView("practiceView");
+      if (topic && topic !== "all") {
+        const exists = [...els.topicSelect.options].some(o => o.value === topic);
+        if (exists) els.topicSelect.value = topic;
+      }
+      startSession();
+    }
+
+    window.practiceTopic = practiceTopic;
 
     async function loadBank() {
       try {
@@ -498,12 +927,6 @@
 
         hydrateFilters();
         updateStats();
-        els.mainPanel.innerHTML = `
-          <div class="empty">
-            <h2>Question bank loaded successfully</h2>
-            <p>${state.bank.length} questions are ready. Press <strong>Start Practice</strong> to begin.</p>
-          </div>
-        `;
       } catch (error) {
         els.mainPanel.innerHTML = `
           <div class="empty">
@@ -511,7 +934,6 @@
             <p>Please confirm these files exist exactly in GitHub:</p>
             <p><code>data/nca610_question_bank.js</code><br><code>data/nca610_question_bank.json</code></p>
             <p>Error: ${escapeHtml(error.message)}</p>
-            <p>Tip: open the <strong>data</strong> folder in GitHub and check that the filenames match exactly.</p>
           </div>
         `;
       }
@@ -653,7 +1075,6 @@
     }
 
     function paintAnswer(showExplanation) {
-      const q = state.session[state.index];
       const answer = state.answers[state.index];
       if (!answer) return;
 
@@ -747,7 +1168,7 @@
       els.mainPanel.innerHTML = `
         <div class="empty">
           <h2>Ready to practice</h2>
-          <p>Choose your settings and press <strong>Start Practice</strong>.</p>
+          <p>Choose your settings and press <strong>New Session</strong>.</p>
         </div>
       `;
       updateStats();
@@ -764,13 +1185,8 @@
       els.currentScore.textContent = `${score}%`;
     }
 
-    function unique(items) {
-      return [...new Set(items)];
-    }
-
-    function naturalSort(a, b) {
-      return String(a).localeCompare(String(b), undefined, { numeric: true });
-    }
+    function unique(items) { return [...new Set(items)]; }
+    function naturalSort(a, b) { return String(a).localeCompare(String(b), undefined, { numeric: true }); }
 
     function shuffle(items) {
       const arr = [...items];
@@ -794,10 +1210,11 @@
       return escapeHtml(value).replaceAll("`", "&#096;");
     }
 
-    els.startBtn.addEventListener("click", startSession);
     els.newSessionBtn.addEventListener("click", startSession);
     els.resetBtn.addEventListener("click", resetSession);
 
+    renderStudyHub();
+    renderFlashcards();
     loadBank();
   </script>
 </body>
