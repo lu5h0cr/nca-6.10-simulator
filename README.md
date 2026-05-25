@@ -1,3 +1,5 @@
+https://lu5h0cr.github.io/nca-6.10-simulator/
+
 # NCA 6.10 - Simulador local con imagenes
 
 Estructura:
