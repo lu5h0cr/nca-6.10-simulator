@@ -1,7 +1,7 @@
 // questions.js
-// Banco privado para el simulador NCA 6.10.
-// Generado desde el material de estudio proporcionado por el usuario.
-// No subir a un repositorio público si contiene material privado o restringido.
+// Banco privado NCA 6.10 - versión corregida Wawa.
+// Generado desde: NCA Q&A Corregidos Wawa.pdf
+// Uso local/privado con el simulador. No publicar si contiene material privado o restringido.
 
 window.PRIVATE_QUESTION_BANK = [
   {
@@ -15,7 +15,7 @@ window.PRIVATE_QUESTION_BANK = [
       "P4"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q002",
@@ -27,8 +27,8 @@ window.PRIVATE_QUESTION_BANK = [
       "VMs with attached Volume Groups",
       "VMs marked as an Agent"
     ],
-    "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "correctAnswerIndex": 2,
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q003",
@@ -40,8 +40,8 @@ window.PRIVATE_QUESTION_BANK = [
       "Settings",
       "Analysis"
     ],
-    "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "correctAnswerIndex": 0,
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q004",
@@ -54,7 +54,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Erasure Coding"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q005",
@@ -67,7 +67,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Run nee health checks run all."
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q006",
@@ -80,7 +80,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Volumes"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q007",
@@ -92,8 +92,8 @@ window.PRIVATE_QUESTION_BANK = [
       "NCC",
       "MSP"
     ],
-    "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "correctAnswerIndex": 1,
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q008",
@@ -106,7 +106,7 @@ window.PRIVATE_QUESTION_BANK = [
       "DNS Configuration"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q009",
@@ -119,7 +119,7 @@ window.PRIVATE_QUESTION_BANK = [
       "LVM"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q010",
@@ -131,8 +131,8 @@ window.PRIVATE_QUESTION_BANK = [
       "Bridge0",
       "Virbr0"
     ],
-    "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "correctAnswerIndex": 3,
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q011",
@@ -145,7 +145,7 @@ window.PRIVATE_QUESTION_BANK = [
       "OVAs"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q012",
@@ -158,7 +158,7 @@ window.PRIVATE_QUESTION_BANK = [
       "P4"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q013",
@@ -171,7 +171,7 @@ window.PRIVATE_QUESTION_BANK = [
       "HA"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q014",
@@ -184,7 +184,7 @@ window.PRIVATE_QUESTION_BANK = [
       "STIG"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q015",
@@ -197,7 +197,7 @@ window.PRIVATE_QUESTION_BANK = [
       "VM"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q016",
@@ -210,7 +210,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Move"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q017",
@@ -222,8 +222,8 @@ window.PRIVATE_QUESTION_BANK = [
       "Policy are applied to an entity type in a category.",
       "Policy are applied to a specific entity."
     ],
-    "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "correctAnswerIndex": 2,
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q018",
@@ -236,7 +236,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Metro Cluster"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q019",
@@ -249,7 +249,7 @@ window.PRIVATE_QUESTION_BANK = [
       "6"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q020",
@@ -262,7 +262,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Nutanix Compatibility Bundle"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q021",
@@ -275,7 +275,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Active-Backup"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q022",
@@ -288,7 +288,7 @@ window.PRIVATE_QUESTION_BANK = [
       "4:00am"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q023",
@@ -300,8 +300,8 @@ window.PRIVATE_QUESTION_BANK = [
       "This node in the cluster is already in maintenance mode.",
       "Other nodes in the cluster may not have enough resources available."
     ],
-    "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "correctAnswerIndex": 0,
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q024",
@@ -314,7 +314,7 @@ window.PRIVATE_QUESTION_BANK = [
       "NearSync"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q025",
@@ -327,7 +327,7 @@ window.PRIVATE_QUESTION_BANK = [
       "2minutes"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q026",
@@ -340,7 +340,7 @@ window.PRIVATE_QUESTION_BANK = [
       "4"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q027",
@@ -353,7 +353,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Prism Central"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q028",
@@ -366,7 +366,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Sysprep or Cloud-init script."
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q029",
@@ -379,7 +379,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Hardware"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q030",
@@ -392,7 +392,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Pulse"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q031",
@@ -405,7 +405,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Run Health Checks in the Alert Dashboard and enter an email to send it to."
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q032",
@@ -418,7 +418,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Prism Element Licensing"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q033",
@@ -431,7 +431,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Mixed, Advanced, Enterprise"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q034",
@@ -444,7 +444,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Nutanix Data Services"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q035",
@@ -457,7 +457,7 @@ window.PRIVATE_QUESTION_BANK = [
       "NFS"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q036",
@@ -470,7 +470,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Nutanix Cloud Infrastructure (NCI)"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q037",
@@ -483,7 +483,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Trusted Platform Module"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q038",
@@ -496,7 +496,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Check hardware availability of the nodes."
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q039",
@@ -509,7 +509,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Scheduled"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q040",
@@ -522,7 +522,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Nutanix Objects"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q041",
@@ -535,7 +535,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Category"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q042",
@@ -548,7 +548,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Dynamic read cache"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q043",
@@ -561,7 +561,7 @@ window.PRIVATE_QUESTION_BANK = [
       "It accelerates data transfer to remote backup sites."
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q044",
@@ -574,7 +574,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Keeps deleted VMs for 24 hours for recovery."
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q045",
@@ -587,7 +587,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Full clone VMs"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q046",
@@ -599,8 +599,8 @@ window.PRIVATE_QUESTION_BANK = [
       "Select highest value in Trigger alert if conditions persist for.",
       "After alert occurs, uncheck Enable Policy box for 48 hours."
     ],
-    "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "correctAnswerIndex": 0,
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q047",
@@ -613,7 +613,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Alerts"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q048",
@@ -626,7 +626,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Group of Storage Containers"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q049",
@@ -639,7 +639,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Use third party tools."
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q050",
@@ -652,7 +652,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Central"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q051",
@@ -665,7 +665,7 @@ window.PRIVATE_QUESTION_BANK = [
       "From Prism Element Licensing, follow the specified process."
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q052",
@@ -678,7 +678,7 @@ window.PRIVATE_QUESTION_BANK = [
       "To simplify Software and firmware upgrades"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q053",
@@ -691,7 +691,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Software-only Encryption"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q054",
@@ -704,7 +704,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Mount and install the VirtlO drivers."
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q055",
@@ -717,7 +717,7 @@ window.PRIVATE_QUESTION_BANK = [
       "7"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q056",
@@ -730,7 +730,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Navigate to the Health dashboard."
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q057",
@@ -743,7 +743,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Synchronous Replication"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q058",
@@ -756,7 +756,7 @@ window.PRIVATE_QUESTION_BANK = [
       "RF1 is enabled by default in a storage container."
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q059",
@@ -769,7 +769,7 @@ window.PRIVATE_QUESTION_BANK = [
       "3"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material de estudio: B."
+    "explanation": "Respuesta marcada en el material corregido: B."
   },
   {
     "id": "Q060",
@@ -782,7 +782,7 @@ window.PRIVATE_QUESTION_BANK = [
       "It reduces the frequency of system updates"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   },
   {
     "id": "Q061",
@@ -795,7 +795,7 @@ window.PRIVATE_QUESTION_BANK = [
       "Every 24 hours"
     ],
     "correctAnswerIndex": 3,
-    "explanation": "Respuesta marcada en el material de estudio: D."
+    "explanation": "Respuesta marcada en el material corregido: D."
   },
   {
     "id": "Q062",
@@ -808,7 +808,7 @@ window.PRIVATE_QUESTION_BANK = [
       "XenServer"
     ],
     "correctAnswerIndex": 2,
-    "explanation": "Respuesta marcada en el material de estudio: C."
+    "explanation": "Respuesta marcada en el material corregido: C."
   },
   {
     "id": "Q063",
@@ -821,6 +821,6 @@ window.PRIVATE_QUESTION_BANK = [
       "vBlock"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material de estudio: A."
+    "explanation": "Respuesta marcada en el material corregido: A."
   }
 ];
