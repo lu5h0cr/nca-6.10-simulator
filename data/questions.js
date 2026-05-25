@@ -1,7 +1,6 @@
 // questions.js
-// Banco privado NCA 6.10 - versión corregida Wawa.
-// Generado desde: NCA Q&A Corregidos Wawa.pdf
-// Uso local/privado con el simulador. No publicar si contiene material privado o restringido.
+// Banco privado NCA 6.10 con solo las imagenes/exhibits reales seleccionadas.
+// Mantener privado/local.
 
 window.PRIVATE_QUESTION_BANK = [
   {
@@ -509,7 +508,8 @@ window.PRIVATE_QUESTION_BANK = [
       "Scheduled"
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material corregido: A."
+    "explanation": "Respuesta marcada en el material corregido: A.",
+    "image": "./images/q039_exhibit.png"
   },
   {
     "id": "Q040",
@@ -600,7 +600,8 @@ window.PRIVATE_QUESTION_BANK = [
       "After alert occurs, uncheck Enable Policy box for 48 hours."
     ],
     "correctAnswerIndex": 0,
-    "explanation": "Respuesta marcada en el material corregido: A."
+    "explanation": "Respuesta marcada en el material corregido: A.",
+    "image": "./images/q046_exhibit.png"
   },
   {
     "id": "Q047",
@@ -613,7 +614,8 @@ window.PRIVATE_QUESTION_BANK = [
       "Alerts"
     ],
     "correctAnswerIndex": 1,
-    "explanation": "Respuesta marcada en el material corregido: B."
+    "explanation": "Respuesta marcada en el material corregido: B.",
+    "image": "./images/q047_exhibit.png"
   },
   {
     "id": "Q048",
