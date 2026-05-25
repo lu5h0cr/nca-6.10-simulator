@@ -1,0 +1,5 @@
+﻿id,pdf_page,image_file,detection_reason,question_preview
+Q038,39,q038_exhibit.png,image_block,"An administrator wants to change from Redundancy Factor 2 to 3, but it is not allowed. What must the administrator check?"
+Q045,46,q045_exhibit.png,image_block,When is deduplication recommended?
+Q046,47,q046_exhibit.png,image_block,Refer to the exhibit. What action can be taken to prevent this alert policy from creating multiple alerts within a 48- hour period if the 90% threshold is cross
+Q063,64,q063_exhibit.png,image_block,"In Prism Element, to which object are policies such as replication factor and storage efficiency settings applied?"
