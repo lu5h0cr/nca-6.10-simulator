@@ -1,0 +1,4 @@
+﻿id,question_number,pdf_page,visual_score,question_preview,image_details
+Q039,39,40,0,Refer to the exhibit. What should be first selected to run a full health check?,[]
+Q046,46,47,54112.66597836907,Refer to the exhibit. What action can be taken to prevent this alert policy from creating multiple alerts within a 48- hour period if the 90,"[(20090.9360206055, (167.5, 242.6, 335.3, 362.4)), (20090.93858041987, (167.5, 362.2, 335.3, 481.9)), (13930.791377343703, (167.5, 481.7, 335.3, 564.7))]"
+Q047,47,48,0,"Refer to the exhibit. After logging into Prism Element, an administrator sees a red heart as shown in the exhibit. Which dashboard will help",[]
