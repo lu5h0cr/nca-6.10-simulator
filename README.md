@@ -1,3 +1,5 @@
+https://lu5h0cr.github.io/nca-6.10-simulator/
+
 # NCA 6.10 Private Practice Simulator
 
 Simulador privado para GitHub Pages con requisito de aprobación de 80%.
