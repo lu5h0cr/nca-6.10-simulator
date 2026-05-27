@@ -292,7 +292,7 @@ window.PRIVATE_QUESTION_BANK = [
   {
     "id": "Q023",
     "topic": "NCA 6.10",
-    "question": "An administrator receives the alert: What is the most likely cause?",
+    "question": "An administrator receives the alert: NODE MAINTENANCE MODE FAILURE. What is the most likely cause?",
     "options": [
       "Another node in this cluster is already in maintenance mode.",
       "This node in the cluster may not have enough resources available.",
