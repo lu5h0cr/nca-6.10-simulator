@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCA 6.10 - Simulador Examen </title>
+<title>NCA 6.10 - Test Simulator</title>
 <style>
 :root{--bg:#07101f;--panel:#111827;--text:#eef2ff;--muted:#a7b0c4;--border:#2a3a55;--accent:#22d3ee;--purple:#8b5cf6;--good:#22c55e;--bad:#ef4444;--warn:#f59e0b}
 *{box-sizing:border-box}
@@ -38,9 +38,9 @@ button:hover{border-color:rgba(34,211,238,.55);transform:translateY(-1px)}button
 <div class="shell">
 <header class="hero">
 <div class="hero-main card">
-<div class="eyebrow">NCA 6.10 Local Simulator</div>
-<h1>Simulador Examen </h1>
-<p class="subtitle">Simulador para practicar con el banco de preguntas del Dump. Incluyo modo examen real, modo práctica y requisito mínimo de aprobación del <strong>80%</strong>.</p>
+<div class="eyebrow">NCA 6.10 Test Simulator</div>
+<h1>Test Simulator</h1>
+<p class="subtitle">Simulador para practicar con el banco de preguntas del Dump. Modo examen real, modo práctica y requisito mínimo de aprobación del <strong>80%</strong>. Éxitos</p>
 <div class="actions"><button class="primary" onclick="quickStartReal()">Iniciar modo real</button><button onclick="quickStartPractice()">Iniciar práctica</button></div>
 <div class="notice">Modo real: usa las 63 preguntas, no muestra respuestas hasta finalizar y exige 80%. Modo práctica: permite verificar cada respuesta y estudiar con retroalimentación inmediata.</div>
 </div>
@@ -49,14 +49,14 @@ button:hover{border-color:rgba(34,211,238,.55);transform:translateY(-1px)}button
 <main class="layout">
 <aside class="settings card">
 <h2>Configuración</h2>
-<div class="mode-card"><label>Versión del simulador 5.2 </label><button class="mode-btn active" id="realModeBtn" onclick="setSimulatorMode('real')"><strong>Modo real</strong><br>63 preguntas, sin ver respuestas durante el examen.</button><button class="mode-btn" id="practiceModeBtn" onclick="setSimulatorMode('practice')"><strong>Modo práctica</strong><br>Permite verificar respuesta correcta en cada pregunta.</button></div>
+<div class="mode-card"><label>Versión del simulador 5.2</label><button class="mode-btn active" id="realModeBtn" onclick="setSimulatorMode('real')"><strong>Modo real</strong><br>63 preguntas, sin ver respuestas durante el examen.</button><button class="mode-btn" id="practiceModeBtn" onclick="setSimulatorMode('practice')"><strong>Modo práctica</strong><br>Permite verificar respuesta correcta en cada pregunta.</button></div>
 <div class="field"><label>Cantidad</label><select id="countSelect"><option value="63">63 preguntas</option><option value="10">10 preguntas</option><option value="25">25 preguntas</option><option value="50">50 preguntas</option><option value="all">Todas</option></select></div>
 <div class="field"><label>Orden de preguntas</label><select id="shuffleQuestions"><option value="yes">Aleatorias</option><option value="no">Orden original</option></select></div>
 <div class="field"><label>Orden de opciones</label><select id="shuffleOptions"><option value="yes">Mezclar opciones</option><option value="no">Mantener opciones</option></select></div>
 <button class="primary" style="width:100%" onclick="startSession()">Nueva sesión</button><button class="danger" style="width:100%;margin-top:10px" onclick="resetSession()">Reiniciar</button>
 </aside>
 <section class="main card" id="mainPanel"><div class="empty"><h2>Listo para practicar</h2><p>El simulador cargará las preguntas desde <strong>data/questions.js</strong>.</p></div></section>
-</main><div class="footer">NCA 6.10 · Simulador Examen · By Quantyra </div>
+</main><div class="footer">NCA 6.10 · Test Simulator · By Quantyra</div>
 </div>
 <script src="./data/questions.js"></script>
 <script>
