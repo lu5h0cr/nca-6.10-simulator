@@ -824,5 +824,331 @@ window.PRIVATE_QUESTION_BANK = [
     ],
     "correctAnswerIndex": 0,
     "explanation": "Respuesta marcada en el material corregido: A."
+  },
+window.PRIVATE_QUESTION_BANK.push(...[
+  {
+    "id": "NCA-P2-Q001",
+    "topic": "Data Protection / NGT",
+    "question": "An administrator requires application-consistent snapshots of a Microsoft SQL Server 2019 to be taken. What should the administrator ensure is enabled to satisfy this requirement?",
+    "options": [
+      "Nutanix Guest Tools",
+      "Nutanix Guest Tools, Self Service Restore",
+      "Nutanix Guest Tools, Volume Snapshot Service",
+      "Self Service Restore, Volume Snapshot Service"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "After enabling Nutanix Guest Tools, the Volume Snapshot Service (VSS) application-consistent snapshot feature can be used for supported Windows workloads such as Microsoft SQL Server."
+  },
+  {
+    "id": "NCA-P2-Q002",
+    "topic": "Hypervisors / vGPU",
+    "question": "Which hypervisors allow an administrator to create a cluster that supports vGPU-enabled VMs?",
+    "options": [
+      "Hyper-V and AHV",
+      "XenServer and AHV",
+      "AHV and ESXi",
+      "ESXi and Proxmox"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "According to Nutanix hypervisor feature compatibility, vGPU-enabled VMs are supported with AHV and ESXi."
+  },
+  {
+    "id": "NCA-P2-Q003",
+    "topic": "Health / NCC",
+    "question": "An administrator has been tasked with updating the frequency of the automated run of NCC checks. Which dashboard should the administrator use to accomplish this task?",
+    "options": [
+      "Health",
+      "Analysis",
+      "Alerts",
+      "Tasks"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "In Prism Element, NCC frequency is configured from the Health dashboard by using the Actions menu and selecting Set NCC Frequency."
+  },
+  {
+    "id": "NCA-P2-Q004",
+    "topic": "LCM / Hypervisor Upgrade",
+    "question": "An administrator is planning to upgrade AHV in a Nutanix cluster. Which interface should be used to accomplish this task?",
+    "options": [
+      "Prism Central",
+      "Nutanix Central",
+      "Prism Element",
+      "Foundation"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Hypervisor upgrades are performed through the Prism Element web console by using LCM for the cluster being upgraded."
+  },
+  {
+    "id": "NCA-P2-Q005",
+    "topic": "LCM / Dark Site",
+    "question": "An administrator would like to update the firmware on a dark site Nutanix cluster to the latest versions. Upon completing inventory, the expected latest updates are not shown. What should the administrator do to ensure that the latest firmware updates are displayed?",
+    "options": [
+      "Install the latest compatibility bundle.",
+      "Upgrade to the latest version of AOS.",
+      "Refresh the web browser.",
+      "Reboot the dark site web server."
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "For dark-site firmware updates using LCM, the latest Nutanix Compatibility Bundle must be downloaded and made available so inventory can show the latest updates."
+  },
+  {
+    "id": "NCA-P2-Q006",
+    "topic": "Hypervisors / Compatibility",
+    "question": "Which hypervisor is unsupported for a Nutanix cluster?",
+    "options": [
+      "AHV",
+      "ESXi",
+      "Proxmox",
+      "Hyper-V"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "AHV, ESXi, and Hyper-V are supported hypervisors for Nutanix clusters. Proxmox is not listed as a supported hypervisor in the Nutanix compatibility matrix."
+  },
+  {
+    "id": "NCA-P2-Q007",
+    "topic": "Hypervisor Conversion",
+    "question": "What is a prerequisite for in-place hypervisor conversion from ESXi to AHV?",
+    "options": [
+      "vCenter VM is not on the same cluster.",
+      "vCenter VM is on the same cluster.",
+      "HA and DRS must be disabled.",
+      "NX Hardware should be used."
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "vCenter must not run on the same cluster being converted because the vCenter API is required during the conversion workflow."
+  },
+  {
+    "id": "NCA-P2-Q008",
+    "topic": "Storage / Erasure Coding",
+    "question": "What is the minimum number of nodes needed for Erasure Coding on a Redundancy Factor 3 cluster?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": "Erasure Coding requires one additional node. RF3 has a 5-node minimum, so Erasure Coding on RF3 requires a minimum of 6 nodes."
+  },
+  {
+    "id": "NCA-P2-Q009",
+    "topic": "Files / Permissions",
+    "question": "An administrator needs to make NTFS permission changes to a Files Server Distributed Share. Which console should be used to make the change?",
+    "options": [
+      "File Server VM Console",
+      "Prism Element",
+      "Nutanix Central",
+      "MMC Snap-In for Files"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": "NTFS permissions for distributed SMB shares are managed with the Windows MMC Snap-In for Nutanix Files."
+  },
+  {
+    "id": "NCA-P2-Q010",
+    "topic": "VM Administration / Disk Creation",
+    "question": "When creating a new VM in AHV, which option allows the administrator to create a disk by copying a file from any location on the cluster?",
+    "options": [
+      "Clone from Image Service",
+      "Add new Disk",
+      "Clone from ADSF file",
+      "Allocate on Storage Container"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Clone from ADSF file copies a file from the cluster path and uses it to create the VM disk."
+  },
+  {
+    "id": "NCA-P2-Q011",
+    "topic": "Hardware / Disk Health",
+    "question": "Where would an administrator view the health of a cluster's disks?",
+    "options": [
+      "Prism Central Storage Containers dashboard",
+      "Prism Element Storage dashboard",
+      "Prism Central Alerts dashboard",
+      "Prism Element Hardware dashboard"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": "Disk health and online status can be viewed in Prism Element from the Hardware dashboard, specifically in the Disks view."
+  },
+  {
+    "id": "NCA-P2-Q012",
+    "topic": "Alerts / Email Configuration",
+    "question": "An administrator wants to send only CRITICAL alerts directly to the company's CIO. Where within the Alert Email Configuration tool in Prism Element should the administrator complete this task?",
+    "options": [
+      "Email Preference",
+      "Settings",
+      "Custom Settings",
+      "Email Content"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Custom Settings allows an administrator to define alert email rules such as severity filters, impact types, and recipients."
+  },
+  {
+    "id": "NCA-P2-Q013",
+    "topic": "Alerts / Policies",
+    "question": "An alert policy was triggered by an API from a non-Nutanix product. What type of policy is it?",
+    "options": [
+      "External",
+      "User",
+      "System",
+      "Configuration"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "External-defined alert policies are defined or triggered by external entities, typically an application through the API."
+  },
+  {
+    "id": "NCA-P2-Q014",
+    "topic": "Nutanix Files",
+    "question": "An administrator needs to migrate 500GB of data from an SMB share. The administrator manages a three-node AHV-based cluster with Starter licensing. Which product could the administrator use to accomplish this goal?",
+    "options": [
+      "Objects",
+      "Files",
+      "Mine",
+      "Volumes"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": "Nutanix cluster licenses include 1TB of Files storage, which can be used for SMB file services."
+  },
+  {
+    "id": "NCA-P2-Q015",
+    "topic": "LCM / Firmware Updates",
+    "question": "Which platform supports firmware updates through LCM?",
+    "options": [
+      "HPE Alletra",
+      "Cisco UCS M5",
+      "Dell XC",
+      "Dell PowerEdge"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Dell XC is listed as a supported platform for firmware updates through Nutanix Life Cycle Manager."
+  },
+  {
+    "id": "NCA-P2-Q016",
+    "topic": "AHV Networking",
+    "question": "When is a network specified to be as either managed or unmanaged?",
+    "options": [
+      "At the time of its creation and cannot be changed later.",
+      "Can be specified anytime after its creation via Prism Element.",
+      "At the time of creation, but can be changed only once later.",
+      "Can be specified anytime after its creation via aCLI."
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "A network must be configured as managed or unmanaged when it is created. It cannot be converted later from one type to the other."
+  },
+  {
+    "id": "NCA-P2-Q017",
+    "topic": "Alerts / Email Content",
+    "question": "An administrator wants to ensure that any Alerts or Digest emails from the Prism Element lab environment are easily identified so that lab clusters can be ignored after hours. What option would allow these emails to be easily identified?",
+    "options": [
+      "Turn off Daily Digest Alert emails for the lab cluster.",
+      "Update Email Content to prepend LAB to the Subject.",
+      "Remove setting from SMTP Server configuration.",
+      "Use Custom Setting page to alter the Impact Type."
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": "Adding LAB to the email subject line provides an easy way to identify alert and digest emails from the lab environment."
+  },
+  {
+    "id": "NCA-P2-Q018",
+    "topic": "Storage / Curator",
+    "question": "When moving a VM from a Replication Factor 3 (RF3) storage container to an RF2 storage container, which service is responsible for recovering the disk space used by the deleted data?",
+    "options": [
+      "Cassandra",
+      "Zeus",
+      "Curator",
+      "Zookeeper"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Curator periodically scans the metadata database and identifies unused blocks so disk space can be reclaimed and data remains balanced."
+  },
+  {
+    "id": "NCA-P2-Q019",
+    "topic": "Licensing",
+    "question": "An administrator needs to upgrade licenses within a Nutanix cluster environment. Where can the administrator go to locate unused licenses?",
+    "options": [
+      "Prism Element",
+      "1-Click Licenses Management Tool",
+      "Nutanix Support Portal Licenses Page",
+      "Prism Central"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "The Nutanix Support Portal Licenses page shows license inventory, assignments, and unused licenses. Prism Element and Prism Central show licenses already assigned to clusters."
+  },
+  {
+    "id": "NCA-P2-Q020",
+    "topic": "LCM / Objects",
+    "question": "From which user interface can Nutanix Objects be upgraded?",
+    "options": [
+      "Prism Element LCM",
+      "Nutanix Objects Page",
+      "Prism Central LCM",
+      "Nutanix Central"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Nutanix Objects is deployed and managed through Prism Central, so upgrades are performed through Prism Central LCM."
+  },
+  {
+    "id": "NCA-P2-Q021",
+    "topic": "AHV Networking",
+    "question": "Which dashboard in Prism Element should be used to create additional VLANs?",
+    "options": [
+      "VM",
+      "Network",
+      "Hardware",
+      "Tasks"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": "In Prism Element, additional VLANs for VM interfaces are created from the VM dashboard by using Network Config."
+  },
+  {
+    "id": "NCA-P2-Q022",
+    "topic": "VM Administration / Cloning",
+    "question": "An administrator has been tasked with cloning a large number of VMs for an upcoming development project. What is the maximum number of VMs that an administrator will be able to clone at one time?",
+    "options": [
+      "150",
+      "200",
+      "250",
+      "300"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Prism Element allows cloning up to 250 VMs at a time."
+  },
+  {
+    "id": "NCA-P2-Q023",
+    "topic": "LCM / Firewall",
+    "question": "A newly-deployed cluster is unable to complete LCM inventory. The administrator just recently installed a firewall and suspects this to be the cause. Which site should the administrator ensure is allowed through the firewall for LCM to run successfully?",
+    "options": [
+      "support.nutanix.com",
+      "download.nutanix.com",
+      "portal.nutanix.com",
+      "insights.nutanix.com"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": "LCM requires access to download.nutanix.com to retrieve update metadata and packages. Release API access may also be required depending on the workflow."
+  },
+  {
+    "id": "NCA-P2-Q024",
+    "topic": "LCM / Dark Site",
+    "question": "Which application is supported when building a Windows web server at a dark site for LCM?",
+    "options": [
+      "Apache HTTPs Server",
+      "Nginx",
+      "IIS",
+      "Apache Tomcat Server"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "Microsoft IIS is the supported application from the choices shown for a Windows-based local web server used in an LCM dark-site workflow."
+  },
+  {
+    "id": "NCA-P2-Q025",
+    "topic": "Objects / Prism Central",
+    "question": "An administrator needs to deploy an Objects cluster into the Nutanix environment for the development team to use. Within which interface should the administrator deploy Objects within the Nutanix cluster?",
+    "options": [
+      "Nutanix Cloud Console",
+      "Nutanix Central",
+      "Prism Central",
+      "Nutanix Kubernetes Platform"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": "To create an object store, Objects must be enabled and deployed through Prism Central."
   }
 ];
