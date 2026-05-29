@@ -49,8 +49,8 @@ button:hover{border-color:rgba(34,211,238,.55);transform:translateY(-1px)}button
 <main class="layout">
 <aside class="settings card">
 <h2>Configuración</h2>
-<div class="mode-card"><label>Versión del simulador 5.2</label><button class="mode-btn active" id="realModeBtn" onclick="setSimulatorMode('real')"><strong>Modo real</strong><br>Todas las preguntas del banco seleccionado, sin ver respuestas durante el examen.</button><button class="mode-btn" id="practiceModeBtn" onclick="setSimulatorMode('practice')"><strong>Modo práctica</strong><br>Permite verificar respuesta correcta en cada pregunta.</button></div>
-<div class="field"><label>Banco de preguntas</label><select id="bankSelect"><option value="core63">Banco original - 63 preguntas</option><option value="part2">Banco nuevo - 25 preguntas</option><option value="all">Banco completo - 88 preguntas</option></select></div><div class="field"><label>Cantidad</label><select id="countSelect"><option value="88">88 preguntas</option><option value="10">10 preguntas</option><option value="25">25 preguntas</option><option value="50">50 preguntas</option><option value="all">Todas</option></select></div>
+<div class="mode-card"><label>Versión del simulador 5.2</label><button class="mode-btn active" id="realModeBtn" onclick="setSimulatorMode('real')"><strong>Modo real</strong><br>63 preguntas, sin ver respuestas durante el examen.</button><button class="mode-btn" id="practiceModeBtn" onclick="setSimulatorMode('practice')"><strong>Modo práctica</strong><br>Permite verificar respuesta correcta en cada pregunta.</button></div>
+<div class="field"><label>Banco de preguntas</label><select id="bankSelect"><option value="core63">Banco original - 63 preguntas</option><option value="core63_50">Banco original - 50 preguntas</option><option value="part2">Banco nuevo - 25 preguntas</option><option value="mixed50">Banco combinado - 50 preguntas</option><option value="all88">Banco combinado - 88 preguntas</option></select></div><div class="field"><label>Cantidad</label><select id="countSelect"><option value="88">88 preguntas</option><option value="10">10 preguntas</option><option value="25">25 preguntas</option><option value="50">50 preguntas</option><option value="all">Todas</option></select></div>
 <div class="field"><label>Orden de preguntas</label><select id="shuffleQuestions"><option value="yes">Aleatorias</option><option value="no">Orden original</option></select></div>
 <div class="field"><label>Orden de opciones</label><select id="shuffleOptions"><option value="yes">Mezclar opciones</option><option value="no">Mantener opciones</option></select></div>
 <button class="primary" style="width:100%" onclick="startSession()">Nueva sesión</button><button class="danger" style="width:100%;margin-top:10px" onclick="resetSession()">Reiniciar</button>
@@ -62,26 +62,58 @@ button:hover{border-color:rgba(34,211,238,.55);transform:translateY(-1px)}button
 <script>
 const PASS_SCORE=80;let bank=[],session=[],idx=0,selected=null,answers=[],locked=false,simulatorMode="real";const $=id=>document.getElementById(id);
 function normalizeBank(){bank=Array.isArray(window.PRIVATE_QUESTION_BANK)?window.PRIVATE_QUESTION_BANK:[];$("totalQuestions").textContent=bank.length;updateStats();}
-function setSimulatorMode(mode){simulatorMode=mode;$("realModeBtn").classList.toggle("active",mode==="real");$("practiceModeBtn").classList.toggle("active",mode==="practice");if(mode==="real")$("countSelect").value="all";}
-function quickStartReal(){setSimulatorMode("real");$("countSelect").value="all";$("shuffleQuestions").value="yes";$("shuffleOptions").value="yes";startSession();}
+function setSimulatorMode(mode){simulatorMode=mode;$("realModeBtn").classList.toggle("active",mode==="real");$("practiceModeBtn").classList.toggle("active",mode==="practice");if(mode==="real")$("countSelect").value="63";}
+function quickStartReal(){
+setSimulatorMode("real");
+$("shuffleQuestions").value="yes";
+$("shuffleOptions").value="yes";
+startSession();
+}
 function quickStartPractice(){setSimulatorMode("practice");$("countSelect").value="10";$("shuffleQuestions").value="yes";$("shuffleOptions").value="yes";startSession();}
 function startSession(){
 let list=bank.map(q=>structuredClone(q));
+
 const bankSelect=document.getElementById("bankSelect");
-const selectedBank=bankSelect?bankSelect.value:"all";
-if(selectedBank==="core63"){list=list.filter(q=>!String(q.id||"").startsWith("NCA-P2-"));}
-if(selectedBank==="part2"){list=list.filter(q=>String(q.id||"").startsWith("NCA-P2-"));}
+const selectedBank=bankSelect?bankSelect.value:"core63";
+
+if(selectedBank==="core63"||selectedBank==="core63_50"){
+  list=list.filter(q=>!String(q.id||"").startsWith("NCA-P2-"));
+}
+
+if(selectedBank==="part2"){
+  list=list.filter(q=>String(q.id||"").startsWith("NCA-P2-"));
+}
+
 if($("shuffleQuestions").value==="yes")list=shuffle(list);
 if($("shuffleOptions").value==="yes")list=list.map(shuffleQuestionOptions);
-const count=$("countSelect").value;
+
+let count=$("countSelect").value;
+
+if(selectedBank==="core63")count="all";
+if(selectedBank==="core63_50")count="50";
+if(selectedBank==="part2")count="all";
+if(selectedBank==="mixed50")count="50";
+if(selectedBank==="all88")count="all";
+
 const take=count==="all"?list.length:Math.min(Number(count),list.length);
+
 session=list.slice(0,take);
-idx=0;selected=null;answers=[];locked=false;
-if(!session.length){$("mainPanel").innerHTML='<div class="empty"><h2>No hay preguntas cargadas</h2><p>Revisá el banco seleccionado o el archivo <strong>data/questions.js</strong>.</p></div>';updateStats();return;}
-renderQuestion();updateStats();
+idx=0;
+selected=null;
+answers=[];
+locked=false;
+
+if(!session.length){
+  $("mainPanel").innerHTML='<div class="empty"><h2>No hay preguntas cargadas</h2><p>Revisá el banco seleccionado o el archivo <strong>data/questions.js</strong>.</p></div>';
+  updateStats();
+  return;
+}
+
+renderQuestion();
+updateStats();
 }
 function shuffleQuestionOptions(q){const correctText=q.options[q.correctAnswerIndex];const options=q.options.map((text,originalIndex)=>({text,originalIndex}));const shuffled=shuffle(options);q.options=shuffled.map(o=>o.text);q.correctAnswerIndex=shuffled.findIndex(o=>o.text===correctText);return q;}
-function renderQuestion(){const q=session[idx],pct=(idx/session.length)*100,answeredThis=answers[idx];$("mainPanel").innerHTML=`<div class="progress"><div style="width:${pct}%"></div></div><div class="pillrow"><span class="pill accent">Pregunta ${idx+1} / ${session.length}</span><span class="pill">ID ${escapeHtml(q.id||"")}</span><span class="pill ${simulatorMode==="real"?"warn":"good"}">${simulatorMode==="real"?"Modo real":"Modo práctica"}</span><span class="pill">${escapeHtml(q.topic||"NCA 6.10")}</span></div><h2 class="question">${escapeHtml(q.question)}</h2>${q.image?`<img class="question-image" src="${escapeHtml(q.image)}" alt="Exhibit de la pregunta">`:""}<div class="options">${(q.options||[]).map((opt,i)=>`<button class="option" data-i="${i}">${String.fromCharCode(65+i)}. ${escapeHtml(opt)}</button>`).join("")}</div><div class="feedback" id="feedbackBox"></div><div class="navrow"><button id="prevBtn" ${idx===0?"disabled":""}>Anterior</button><div>${simulatorMode==="practice"?'<button class="success" id="verifyBtn">Verificar respuesta</button>':'<button class="primary" id="saveBtn">Guardar respuesta</button>'}<button id="nextBtn">${idx===session.length-1?"Finalizar":"Siguiente"}</button></div></div>`;document.querySelectorAll(".option").forEach(btn=>btn.addEventListener("click",()=>selectOption(Number(btn.dataset.i))));if(simulatorMode==="practice")$("verifyBtn").addEventListener("click",verifyPracticeAnswer);else $("saveBtn").addEventListener("click",saveRealAnswer);$("nextBtn").addEventListener("click",nextQuestion);$("prevBtn").addEventListener("click",previousQuestion);if(answeredThis){selected=answeredThis.selected;locked=simulatorMode==="practice";paintAnswer(simulatorMode==="practice");}else{selected=null;locked=false;}}
+function renderQuestion(){const q=session[idx],pct=(idx/session.length)*100,answeredThis=answers[idx];$("mainPanel").innerHTML=`<div class="progress"><div style="width:${pct}%"></div></div><div class="pillrow"><span class="pill accent">Pregunta ${idx+1} / ${session.length}</span><span class="pill ${simulatorMode==="real"?"warn":"good"}">${simulatorMode==="real"?"Modo real":"Modo práctica"}</span><span class="pill">${escapeHtml(q.topic||"NCA 6.10")}</span></div><h2 class="question">${escapeHtml(q.question)}</h2>${q.image?`<img class="question-image" src="${escapeHtml(q.image)}" alt="Exhibit de la pregunta">`:""}<div class="options">${(q.options||[]).map((opt,i)=>`<button class="option" data-i="${i}">${String.fromCharCode(65+i)}. ${escapeHtml(opt)}</button>`).join("")}</div><div class="feedback" id="feedbackBox"></div><div class="navrow"><button id="prevBtn" ${idx===0?"disabled":""}>Anterior</button><div>${simulatorMode==="practice"?'<button class="success" id="verifyBtn">Verificar respuesta</button>':'<button class="primary" id="saveBtn">Guardar respuesta</button>'}<button id="nextBtn">${idx===session.length-1?"Finalizar":"Siguiente"}</button></div></div>`;document.querySelectorAll(".option").forEach(btn=>btn.addEventListener("click",()=>selectOption(Number(btn.dataset.i))));if(simulatorMode==="practice")$("verifyBtn").addEventListener("click",verifyPracticeAnswer);else $("saveBtn").addEventListener("click",saveRealAnswer);$("nextBtn").addEventListener("click",nextQuestion);$("prevBtn").addEventListener("click",previousQuestion);if(answeredThis){selected=answeredThis.selected;locked=simulatorMode==="practice";paintAnswer(simulatorMode==="practice");}else{selected=null;locked=false;}}
 function selectOption(i){if(locked)return;selected=i;document.querySelectorAll(".option").forEach(b=>b.classList.remove("selected"));const selectedButton=document.querySelector(`.option[data-i="${i}"]`);if(selectedButton)selectedButton.classList.add("selected");if(simulatorMode==="real")saveRealAnswer(false);}
 function saveRealAnswer(showNotice=true){if(selected===null)return;const q=session[idx],correct=Number(q.correctAnswerIndex);answers[idx]={selected,correct,isCorrect:selected===correct};if(showNotice){const box=$("feedbackBox");box.className="feedback show";box.innerHTML="Respuesta guardada. En modo real verás el resultado al finalizar.";}updateStats();}
 function verifyPracticeAnswer(){if(selected===null)return;const q=session[idx],correct=Number(q.correctAnswerIndex);answers[idx]={selected,correct,isCorrect:selected===correct};locked=true;paintAnswer(true);updateStats();}
