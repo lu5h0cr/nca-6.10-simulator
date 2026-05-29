@@ -825,7 +825,6 @@ window.PRIVATE_QUESTION_BANK = [
     "correctAnswerIndex": 0,
     "explanation": "Respuesta marcada en el material corregido: A."
   },
-window.PRIVATE_QUESTION_BANK.push(...[
   {
     "id": "NCA-P2-Q001",
     "topic": "Data Protection / NGT",
