@@ -80,59 +80,6 @@ function resetSession(){session=[];idx=0;selected=null;answers=[];locked=false;$
 function updateStats(){const answered=answers.filter(Boolean).length,correct=answers.filter(a=>a&&a.isCorrect).length;$("answeredCount").textContent=answered;$("currentScore").textContent=answered?Math.round(correct/answered*100)+"%":"0%";}
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function escapeHtml(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
-function applyQuantyraPart2Labels() {
-    try {
-      const totalLabel = document.querySelector(".footer");
-      if (totalLabel) {
-        totalLabel.textContent = "NCA 6.10 · Test Simulator · By Quantyra";
-      }
-
-      const notice = document.querySelector(".notice");
-      if (notice) {
-        notice.textContent = "Modo real: usa todas las preguntas disponibles, no muestra respuestas hasta finalizar y exige 80%. Modo práctica: permite verificar cada respuesta y estudiar con retroalimentación inmediata.";
-      }
-
-      const realBtn = document.getElementById("realModeBtn");
-      if (realBtn) {
-        realBtn.innerHTML = "<strong>Modo real</strong><br>Todas las preguntas, sin ver respuestas durante el examen.";
-      }
-
-      const countSelect = document.getElementById("countSelect");
-      if (countSelect) {
-        const option63 = countSelect.querySelector('option[value="63"]');
-        if (option63) {
-          option63.value = "all";
-          option63.textContent = "Todas las preguntas";
-        }
-        const allOption = countSelect.querySelector('option[value="all"]');
-        if (allOption) {
-          allOption.textContent = "Todas las preguntas";
-        }
-        countSelect.value = "all";
-      }
-    } catch (error) {
-      console.warn("Quantyra Part 2 label patch skipped:", error);
-    }
-  }
-
-  const __quantyraOriginalSetSimulatorMode = setSimulatorMode;
-  setSimulatorMode = function(mode) {
-    __quantyraOriginalSetSimulatorMode(mode);
-    if (mode === "real") {
-      document.getElementById("countSelect").value = "all";
-    }
-  };
-
-  quickStartReal = function() {
-    setSimulatorMode("real");
-    document.getElementById("countSelect").value = "all";
-    document.getElementById("shuffleQuestions").value = "yes";
-    document.getElementById("shuffleOptions").value = "yes";
-    startSession();
-  };
-
-  applyQuantyraPart2Labels();
-}
 normalizeBank();
 </script>
 </body>
