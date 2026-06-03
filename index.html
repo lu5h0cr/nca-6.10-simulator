@@ -1047,7 +1047,10 @@ function nextQuestion(){
   }
 
   if(idx<session.length-1){
-    idx++;selected=null;locked=false;renderQuestion();
+    idx++;
+    selected=null;
+    locked=false;
+    renderQuestion();
   }else{
     renderResults();
   }
@@ -1131,6 +1134,43 @@ function renderFinishConfirmation(){
       ${hasPending?`<button class="${allAnswered?"primary":"danger"}" onclick="${allAnswered?"renderResults()":"confirmFinishWithUnanswered()"}">${allAnswered?"Finalizar test":"Finalizar con preguntas sin responder"}</button>`:`<button class="primary" onclick="renderResults()">Finalizar test</button>`}
     </div>
   </div>`;
+}
+
+
+
+function finishReviewAndReturn(){
+  reviewMode=false;
+  reviewIndexes=[];
+  reviewPos=0;
+  renderFinishConfirmation();
+}
+
+function startPendingReview(){
+  reviewIndexes=getPendingReviewIndexes();
+  if(!reviewIndexes.length){
+    renderFinishConfirmation();
+    return;
+  }
+  reviewMode=true;
+  reviewPos=0;
+  idx=reviewIndexes[0];
+  selected=null;
+  locked=false;
+  renderQuestion();
+}
+
+function goToPendingQuestion(i){
+  reviewIndexes=getPendingReviewIndexes();
+  if(!reviewIndexes.includes(i)){
+    reviewIndexes.push(i);
+    reviewIndexes.sort((a,b)=>a-b);
+  }
+  reviewPos=Math.max(0,reviewIndexes.indexOf(i));
+  reviewMode=true;
+  idx=i;
+  selected=null;
+  locked=false;
+  renderQuestion();
 }
 
 function goToQuestion(i){
