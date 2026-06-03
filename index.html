@@ -597,13 +597,243 @@ select option[disabled]{
   .right-actions{display:grid;grid-template-columns:1fr}
   .mark-btn{width:100%!important;max-width:none!important}
 }
+
+/* Quantyra v7.0 theme system */
+html{
+  transition:background-color .45s ease,color .45s ease;
+}
+
+body,
+.header,
+.card,
+.config-card,
+.exam-panel,
+.sidebar,
+.option,
+.mode-btn,
+select,
+button,
+.status-note,
+.stat,
+.reviewitem,
+.review-list,
+.feedback{
+  transition:
+    background .45s ease,
+    background-color .45s ease,
+    color .45s ease,
+    border-color .45s ease,
+    box-shadow .45s ease,
+    filter .45s ease;
+}
+
+.theme-toggle{
+  position:fixed;
+  top:18px;
+  right:22px;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  border:1px solid rgba(216,222,232,.24);
+  background:rgba(5,7,11,.72);
+  color:var(--soft);
+  backdrop-filter:blur(12px);
+  box-shadow:0 12px 32px rgba(0,0,0,.25);
+}
+
+.theme-toggle span{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:inherit;
+}
+
+.theme-toggle button{
+  width:42px;
+  height:22px;
+  padding:0;
+  border-radius:999px;
+  border:1px solid rgba(216,222,232,.32);
+  background:#05070b;
+  position:relative;
+  cursor:pointer;
+}
+
+.theme-toggle button::after{
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  left:3px;
+  top:2px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#f7f8fa,#9fb0c7);
+  transition:transform .35s ease,background .35s ease;
+}
+
+body.light-mode{
+  --bg:#f3f5f8;
+  --bg2:#ffffff;
+  --panel:#ffffff;
+  --panel2:#f4f6f9;
+  --glass:rgba(255,255,255,.88);
+  --text:#111827;
+  --muted:#667085;
+  --soft:#2f3b4c;
+  --line:#d8dee8;
+  --line2:#c9d2df;
+  --accent:#1f2937;
+  --accent2:#2f6df6;
+  --blue:#2f6df6;
+  --ice:#345f9d;
+  --good:#178a49;
+  --bad:#cc3439;
+  --warn:#2f6df6;
+  --shadow:0 28px 80px rgba(15,23,42,.13);
+  background:
+    radial-gradient(circle at 50% -18%,rgba(47,109,246,.12),transparent 34rem),
+    radial-gradient(circle at 12% 4%,rgba(0,0,0,.035),transparent 24rem),
+    linear-gradient(180deg,#ffffff 0%,#f3f5f8 52%,#edf1f6 100%);
+}
+
+body.light-mode .header{
+  border-bottom:1px solid rgba(17,24,39,.12);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.92),rgba(243,245,248,.72)),
+    radial-gradient(circle at center top,rgba(47,109,246,.10),transparent 28rem),
+    #ffffff;
+}
+
+body.light-mode .header:before{
+  background:
+    linear-gradient(90deg,transparent 0 8%,rgba(17,24,39,.055) 8.1%,transparent 8.25% 91.75%,rgba(17,24,39,.055) 91.9%,transparent 92%),
+    linear-gradient(180deg,transparent 0 72%,rgba(17,24,39,.035));
+}
+
+body.light-mode .header:after{
+  background:linear-gradient(90deg,transparent,#1f2937,transparent);
+}
+
+body.light-mode .brand{
+  color:#1f2937;
+}
+
+body.light-mode .tagline{
+  color:#475467;
+}
+
+body.light-mode .card{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.96),rgba(247,249,252,.90)),
+    var(--glass);
+  border-color:rgba(17,24,39,.12);
+}
+
+body.light-mode .config-card:before{
+  background:linear-gradient(90deg,#1f2937,transparent);
+}
+
+body.light-mode .config-description{
+  color:#475467;
+}
+
+body.light-mode label{
+  color:#344054;
+}
+
+body.light-mode select{
+  background:#ffffff;
+  color:#111827;
+  border-color:#cbd5e1;
+}
+
+body.light-mode .main-start,
+body.light-mode .side-actions .primary,
+body.light-mode .navrow .primary{
+  background:linear-gradient(135deg,#111827,#344054);
+  color:#ffffff;
+}
+
+body.light-mode .mode-btn,
+body.light-mode .option,
+body.light-mode .stat,
+body.light-mode .reviewitem,
+body.light-mode .review-list{
+  background:rgba(255,255,255,.72);
+  border-color:#d0d7e2;
+  color:#111827;
+}
+
+body.light-mode .mode-btn.active,
+body.light-mode .option.selected,
+body.light-mode .mark-btn.active{
+  border-color:#2f6df6;
+  background:rgba(47,109,246,.10);
+}
+
+body.light-mode .pill{
+  border-color:#cbd5e1;
+  color:#344054;
+}
+
+body.light-mode .pill.accent,
+body.light-mode .pill.warn{
+  color:#1d4ed8;
+  border-color:rgba(47,109,246,.38);
+}
+
+body.light-mode .status-note{
+  color:#1d4ed8;
+  border-color:rgba(47,109,246,.25);
+  background:rgba(47,109,246,.07);
+}
+
+body.light-mode .feedback{
+  color:#1f2937;
+  background:rgba(47,109,246,.07);
+}
+
+body.light-mode .theme-toggle{
+  background:rgba(255,255,255,.78);
+  color:#1f2937;
+  border-color:rgba(17,24,39,.14);
+}
+
+body.light-mode .theme-toggle button{
+  background:#e5eaf1;
+  border-color:#cbd5e1;
+}
+
+body.light-mode .theme-toggle button::after{
+  transform:translateX(19px);
+  background:linear-gradient(135deg,#111827,#2f6df6);
+}
+
+@media(max-width:640px){
+  .theme-toggle{
+    top:10px;
+    right:10px;
+    padding:7px 9px;
+  }
+  .theme-toggle span{
+    display:none;
+  }
+}
 </style>
 </head>
 <body>
+
+<div class="theme-toggle" aria-label="Cambiar tema">
+  <span id="themeLabel">Nocturno</span>
+  <button id="themeSwitch" type="button" title="Cambiar modo nocturno/diurno"></button>
+</div>
+
 <header class="header">
-  <div class="brand">by QUANTYRA</div>
+  <div class="brand">QUANTYRA</div>
   <h1>Nutanix NCA 6.10</h1>
-  <div class="tagline">Simulador Nutanix Associate 6.10</div>
+  <div class="tagline">DATA. INSIGHT. PRECISION. GROWTH.</div>
 </header>
 
 <div class="shell">
@@ -611,7 +841,7 @@ select option[disabled]{
   <section class="config-card card" id="configPanel">
     <h2>Configura tu experiencia</h2>
     <p class="config-description">
-      Bancos separados por bloque de práctica, preguntas y respuestas aleatorias por defecto.
+      Modo nocturno, bancos separados por bloque de práctica, preguntas y respuestas aleatorias por defecto.
       Incluye modo práctica, modo examen real, revisión de preguntas marcadas y puntaje simulado tipo examen.
     </p>
 
@@ -653,7 +883,7 @@ select option[disabled]{
   <main class="simulator" id="simulatorPanel">
     <aside class="sidebar card">
       <h2>Configuración</h2>
-      <div class="version">Versión del simulador 5.4</div>
+      <div class="version">Versión del simulador 7.0</div>
 
       <div class="mode-card">
         <button class="mode-btn active" id="realModeBtn" onclick="setSimulatorMode('real')">
@@ -1162,6 +1392,29 @@ function shuffle(arr){
 function escapeHtml(value){
   return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
+
+
+function applyTheme(theme){
+  const isLight=theme==="light";
+  document.body.classList.toggle("light-mode",isLight);
+  const label=document.getElementById("themeLabel");
+  if(label)label.textContent=isLight?"Diurno":"Nocturno";
+  localStorage.setItem("quantyraTheme",theme);
+}
+
+function toggleTheme(){
+  const isLight=document.body.classList.contains("light-mode");
+  applyTheme(isLight?"dark":"light");
+}
+
+function initTheme(){
+  const saved=localStorage.getItem("quantyraTheme")||"dark";
+  applyTheme(saved);
+  const btn=document.getElementById("themeSwitch");
+  if(btn)btn.addEventListener("click",toggleTheme);
+}
+
+initTheme();
 
 normalizeBank();
 </script>
