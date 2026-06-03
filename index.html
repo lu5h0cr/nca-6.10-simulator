@@ -973,7 +973,7 @@ function toggleFlag(){
 }
 
 function practiceFlowAction(){
-  if(!answers[idx]){
+  if(!locked){
     verifyPracticeAnswer();
   }else{
     nextQuestion();
