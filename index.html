@@ -564,6 +564,66 @@ select:focus{
 select option[disabled]{
   color:#8b8b80;
 }
+
+/* Quantyra navigation refinement */
+.navrow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+
+.navrow > button,
+.right-actions > button{
+  min-width:170px;
+  max-width:220px;
+  height:48px;
+  padding:0 18px;
+  text-align:center;
+}
+
+.right-actions{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:14px;
+  margin-left:auto;
+}
+
+.mark-btn{
+  min-width:52px!important;
+  max-width:52px!important;
+  width:52px!important;
+  height:48px!important;
+  padding:0!important;
+}
+
+@media(max-width:640px){
+  .navrow{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .navrow > button,
+  .right-actions,
+  .right-actions > button{
+    width:100%;
+    min-width:0;
+    max-width:none;
+  }
+
+  .right-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .mark-btn{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
 </style>
 </head>
 <body>
