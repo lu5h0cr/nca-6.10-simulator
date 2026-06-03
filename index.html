@@ -319,7 +319,7 @@ select option[disabled]{
 }
 
 .exam-panel{
-  padding:30px;
+  padding:30px 34px;
   min-height:650px;
 }
 
@@ -362,11 +362,12 @@ select option[disabled]{
 .pill.bad{color:#ffc7ca;border-color:rgba(255,90,95,.45)}
 
 .question{
-  font-size:clamp(26px,3.15vw,46px);
-  line-height:1.14;
-  font-weight:360;
-  letter-spacing:.005em;
-  margin:0 0 26px;
+  font-size:clamp(22px,2.35vw,34px);
+  line-height:1.22;
+  font-weight:340;
+  letter-spacing:.002em;
+  margin:0 0 24px;
+  max-width:980px;
 }
 
 .question-image{
@@ -389,10 +390,10 @@ select option[disabled]{
   border:1px solid rgba(216,222,232,.18);
   background:rgba(255,255,255,.018);
   color:var(--text);
-  padding:15px 17px;
-  font-size:15px;
-  line-height:1.45;
-  font-weight:380;
+  padding:14px 17px;
+  font-size:14.5px;
+  line-height:1.42;
+  font-weight:370;
   cursor:pointer;
   border-radius:0;
 }
@@ -577,6 +578,11 @@ select option[disabled]{
 }
 
 @media(max-width:640px){
+  .question{
+    font-size:clamp(21px,6vw,29px);
+    line-height:1.2;
+  }
+
   .header{min-height:220px;padding:28px 18px 34px}
   .shell{width:min(100% - 20px,1180px)}
   .config-card,.exam-panel,.sidebar{padding:22px}
